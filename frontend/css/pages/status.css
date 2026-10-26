@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Flight Status & Safety Condition Styles
+   ========================================================================== */
+
+.status-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+.status-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-8) 0;
+  position: relative;
+}
+
+.status-timeline::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background-color: var(--color-border);
+  z-index: 1;
+}
+
+.status-timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.timeline-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.status-timeline-node.active .timeline-dot {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 0 0 4px var(--color-primary-light);
+}
+
+.status-timeline-node.completed .timeline-dot {
+  border-color: var(--color-success);
+  background-color: var(--color-success);
+  color: white;
+}
+
+.timeline-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.status-timeline-node.active .timeline-label {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Technical Condition Card */
+.condition-summary-card {
+  background: linear-gradient(135deg, #0B2545 0%, #133E72 100%);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+}

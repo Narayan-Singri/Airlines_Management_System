@@ -113,3 +113,17 @@ def test_flights_search_and_seat_map(client):
     first_seat = seats[0]
     assert first_seat["seat_no"] == "1A"
     assert first_seat["class_type"] == "BUSINESS"
+
+    # Public airports list
+    airports_resp = client.get("/flights/airports")
+    assert airports_resp.status_code == 200
+    airports = airports_resp.json()
+    assert len(airports) >= 2
+    assert any(a["iata_code"] == "BOM" for a in airports)
+
+    # Flight status lookup
+    status_resp = client.get(f"/flights/status/lookup?flight_no={f['flight_no']}")
+    assert status_resp.status_code == 200
+    status_list = status_resp.json()
+    assert len(status_list) >= 1
+    assert status_list[0]["flight_no"] == f["flight_no"]

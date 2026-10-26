@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Flight Search Results Page Styles
+   ========================================================================== */
+
+.search-results-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+/* --------------------------------------------------------------------------
+   Top Modification Bar
+   -------------------------------------------------------------------------- */
+.modify-search-bar {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-sm);
+}
+
+.modify-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  align-items: flex-end;
+}
+
+@media (min-width: 900px) {
+  .modify-grid {
+    grid-template-columns: 1.2fr 1.2fr 1fr 1fr auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Results Main Grid Layout (Filters + Flight List)
+   -------------------------------------------------------------------------- */
+.results-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+@media (min-width: 992px) {
+  .results-layout {
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Filters Sidebar
+   -------------------------------------------------------------------------- */
+.filter-sidebar {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.filter-section {
+  margin-bottom: var(--space-6);
+}
+
+.filter-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-3);
+}
+
+.filter-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  margin-bottom: var(--space-2);
+}
+
+.filter-checkbox-label input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+}
+
+/* Price Range Slider */
+.price-slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.price-slider-wrapper input[type="range"] {
+  accent-color: var(--color-primary);
+  width: 100%;
+}
+
+.price-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --------------------------------------------------------------------------
+   Results List Header (Sort & Flight Counts)
+   -------------------------------------------------------------------------- */
+.results-header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .results-header-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.sort-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sort-select {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  background-color: white;
+  color: var(--color-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Flight Cards Container
+   -------------------------------------------------------------------------- */
+.flight-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}

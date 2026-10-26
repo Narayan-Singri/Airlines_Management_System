@@ -17,6 +17,7 @@ __pycache__/
 .coverage
 htmlcov/
 
-# IDE
+# IDE & Agents
 .vscode/
 .idea/
+.agents/

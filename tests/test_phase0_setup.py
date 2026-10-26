@@ -19,12 +19,10 @@ def test_directory_structure():
         assert d.is_dir(), f"Expected directory missing: {d}"
 
 
-def test_frontend_is_empty_except_gitkeep():
+def test_frontend_directory_exists():
     root = Path(__file__).resolve().parent.parent
     frontend_dir = root / "frontend"
-    files = list(frontend_dir.iterdir())
-    assert len(files) == 1, f"frontend/ must contain only .gitkeep, found: {files}"
-    assert files[0].name == ".gitkeep", f"Expected .gitkeep, found: {files[0].name}"
+    assert frontend_dir.is_dir(), "frontend/ directory must exist"
 
 
 def test_core_files_exist():

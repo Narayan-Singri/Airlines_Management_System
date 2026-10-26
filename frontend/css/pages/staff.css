@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Staff & Flight Operations Portal Styles
+   ========================================================================== */
+
+.staff-body {
+  background-color: #0F172A;
+  color: #F8FAFC;
+}
+
+.staff-navbar {
+  background-color: #1E293B;
+  border-bottom: 1px solid #334155;
+  padding: var(--space-4) 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.staff-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-lg);
+  color: white;
+}
+
+.staff-badge {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.5px;
+}
+
+.staff-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.staff-nav-link {
+  color: #94A3B8;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.staff-nav-link:hover,
+.staff-nav-link.active {
+  color: white;
+  background-color: #334155;
+}
+
+.staff-card {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  color: #F8FAFC;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.staff-card h2, .staff-card h3 {
+  color: white;
+}
+
+.staff-input {
+  background-color: #0F172A;
+  border: 1.5px solid #334155;
+  color: white;
+}
+
+.staff-input:focus {
+  background-color: #1E293B;
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-4);
+}
+
+.staff-table th {
+  background-color: #0F172A;
+  color: #94A3B8;
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid #334155;
+}
+
+.staff-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #334155;
+  font-size: var(--font-size-sm);
+  color: #E2E8F0;
+}
+
+.staff-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.03);
+}

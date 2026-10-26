@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage all your flight reservations, check-in, and download digital boarding passes on FlyNow Airlines.">
+  <title>My Bookings | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/bookings.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="bookings-page">
+    <div class="container" style="max-width: 900px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-8); flex-wrap: wrap; gap: var(--space-4);">
+        <div>
+          <h1 style="font-size: 2rem; margin-bottom: 4px;">My Bookings</h1>
+          <p class="text-sm text-muted">Manage your flight reservations, download tickets, or cancel seats.</p>
+        </div>
+        <a href="/search.html" class="btn btn-primary">
+          <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Book New Flight
+        </a>
+      </div>
+
+      <!-- Bookings List Container -->
+      <div id="bookings-container" class="bookings-list">
+        <!-- Loading skeletons -->
+        <div class="skeleton" style="height: 180px;"></div>
+        <div class="skeleton" style="height: 180px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CANCEL CONFIRMATION MODAL -->
+  <div id="cancel-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title" style="color: var(--color-danger); display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="alert-triangle" style="width: 20px; height: 20px;"></i>
+          <span>Confirm Cancellation</span>
+        </h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-sm" style="margin-bottom: 12px;">
+          Are you sure you want to cancel booking with PNR: <strong id="modal-pnr-text" style="color: var(--color-navy);">-</strong>?
+        </p>
+        <div style="background-color: var(--color-danger-bg); border-left: 3px solid var(--color-danger); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; color: var(--color-danger-text);">
+          Your reserved seat (<span id="modal-seat-text">-</span>) will be immediately released back to the flight inventory and your ticket marked as CANCELLED.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modal-btn-cancel" class="btn btn-secondary">Keep Booking</button>
+        <button type="button" id="modal-btn-confirm" class="btn btn-danger">Yes, Cancel Reservation</button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/my-bookings.js"></script>
+</body>
+</html>

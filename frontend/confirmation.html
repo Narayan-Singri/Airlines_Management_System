@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your flight booking is confirmed on FlyNow Airlines. View and print your official digital boarding pass and ticket receipt.">
+  <title>Booking Confirmed | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/checkout.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="confirmation-page">
+    <div class="container confirmation-card-wrapper">
+
+      <!-- Success Header Banner -->
+      <div class="text-center mb-8 no-print">
+        <div style="width: 64px; height: 64px; background: var(--color-success-bg); color: var(--color-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4) auto; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);">
+          <i data-lucide="check" style="width: 36px; height: 36px; stroke-width: 3;"></i>
+        </div>
+        <h1 style="font-size: 2.25rem; margin-bottom: 8px;">Booking Confirmed!</h1>
+        <p class="text-muted">Your seat has been secured and payment confirmed. An e-ticket has been issued.</p>
+      </div>
+
+      <!-- PRINTABLE E-TICKET CARD -->
+      <div class="ticket-container" id="printable-ticket">
+        <div class="ticket-header">
+          <div class="brand-logo">
+            <div class="logo-icon">
+              <i data-lucide="plane-takeoff" style="width: 20px; height: 20px;"></i>
+            </div>
+            <span style="color: white;">Fly<span class="logo-accent">Now</span></span>
+          </div>
+          <div style="text-align: right;">
+            <div class="text-xs" style="color: #94A3B8; text-transform: uppercase;">Official E-Ticket</div>
+            <span class="badge badge-confirmed"><span class="badge-dot"></span> Confirmed</span>
+          </div>
+        </div>
+
+        <div class="ticket-body">
+          <!-- PNR Banner -->
+          <div class="ticket-pnr-banner">
+            <div>
+              <div class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.5px;">Booking Reference (PNR)</div>
+              <div id="ticket-pnr" class="font-extrabold text-2xl" style="color: var(--color-primary); letter-spacing: 2px;">-</div>
+            </div>
+            <button type="button" id="btn-copy-pnr" class="btn btn-outline btn-sm no-print">
+              <i data-lucide="copy" style="width: 14px; height: 14px;"></i> Copy PNR
+            </button>
+          </div>
+
+          <!-- Ticket Details Grid -->
+          <div class="ticket-grid">
+            <div>
+              <div class="ticket-field-label">Passenger</div>
+              <div id="ticket-passenger" class="ticket-field-value">-</div>
+            </div>
+            <div>
+              <div class="ticket-field-label">Passport / ID</div>
+              <div id="ticket-passport" class="ticket-field-value">-</div>
+            </div>
+            <div>
+              <div class="ticket-field-label">Flight Number</div>
+              <div id="ticket-flight-no" class="ticket-field-value">-</div>
+            </div>
+            <div>
+              <div class="ticket-field-label">Seat Assigned</div>
+              <div id="ticket-seat" class="ticket-field-value" style="color: var(--color-primary);">-</div>
+            </div>
+          </div>
+
+          <!-- Route Block -->
+          <div style="background: var(--color-bg-page); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-8); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div id="ticket-origin-code" class="font-extrabold text-2xl" style="color: var(--color-navy);">-</div>
+              <div id="ticket-origin-city" class="text-sm font-semibold text-muted">-</div>
+              <div id="ticket-dep-time" class="text-xs font-bold text-primary mt-2">-</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <i data-lucide="plane" style="color: var(--color-primary); width: 24px; height: 24px;"></i>
+              <span class="text-xs text-muted">Non-Stop</span>
+            </div>
+
+            <div style="text-align: right;">
+              <div id="ticket-dest-code" class="font-extrabold text-2xl" style="color: var(--color-navy);">-</div>
+              <div id="ticket-dest-city" class="text-sm font-semibold text-muted">-</div>
+              <div id="ticket-arr-time" class="text-xs font-bold text-primary mt-2">-</div>
+            </div>
+          </div>
+
+          <!-- Barcode Footer & Payment Receipt Reference -->
+          <div class="ticket-barcode-footer">
+            <div>
+              <div class="text-xs text-muted">Payment Ledger Reference</div>
+              <div id="ticket-payment-ref" class="text-sm font-semibold" style="color: var(--color-navy);">-</div>
+            </div>
+
+            <!-- Simulated Barcode Graphic -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="height: 32px; display: flex; gap: 3px; align-items: center;" aria-hidden="true">
+                <span style="width: 2px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 4px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 1px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 3px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 5px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 2px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 4px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 1px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 6px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 2px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 3px; height: 100%; background: #0F172A;"></span>
+                <span style="width: 5px; height: 100%; background: #0F172A;"></span>
+              </div>
+              <span id="ticket-barcode-num" class="text-xs font-mono text-muted" style="letter-spacing: 2px;">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons (No Print) -->
+      <div class="no-print mt-8" style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
+        <button type="button" id="btn-print-ticket" class="btn btn-primary btn-lg">
+          <i data-lucide="printer" style="width: 18px; height: 18px;"></i> Print / Save E-Ticket (PDF)
+        </button>
+        <a href="/my-bookings.html" class="btn btn-outline btn-lg">
+          <i data-lucide="ticket" style="width: 18px; height: 18px;"></i> My Bookings
+        </a>
+        <a href="/index.html" class="btn btn-secondary btn-lg">
+          <i data-lucide="home" style="width: 18px; height: 18px;"></i> Return Home
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/confirmation.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+/* ==========================================================================
+   My Bookings & Manage Booking Page Styles
+   ========================================================================== */
+
+.bookings-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.booking-item-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.booking-item-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.booking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.booking-route-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .booking-route-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+  }
+}
+
+.booking-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Digital Boarding Pass Styles (Manage.html)
+   -------------------------------------------------------------------------- */
+.boarding-pass-card {
+  background: white;
+  border-radius: var(--radius-2xl);
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow-floating);
+  overflow: hidden;
+  max-width: 800px;
+  margin: var(--space-8) auto 0 auto;
+}
+
+.boarding-pass-header {
+  background: linear-gradient(135deg, var(--color-primary), #00A3FF);
+  color: white;
+  padding: var(--space-6) var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.boarding-pass-body {
+  padding: var(--space-8);
+}
+
+.boarding-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 600px) {
+  .boarding-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.boarding-notch-divider {
+  position: relative;
+  border-top: 2px dashed var(--color-border);
+  margin: var(--space-6) 0;
+}
+
+.boarding-notch-divider::before,
+.boarding-notch-divider::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-bg-page);
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+}
+
+.boarding-notch-divider::before {
+  left: -40px;
+  border-left-color: transparent;
+}
+
+.boarding-notch-divider::after {
+  right: -40px;
+  border-right-color: transparent;
+}

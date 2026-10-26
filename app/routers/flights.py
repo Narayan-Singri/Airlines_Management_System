@@ -31,6 +31,27 @@ def search_flights(
 
 
 @router.get(
+    "/airports",
+    summary="List airports for dropdowns",
+)
+def get_airports():
+    """Returns all registered airports for public search filters and selection."""
+    return flight_service.list_airports_public()
+
+
+@router.get(
+    "/status/lookup",
+    summary="Public flight status and condition lookup",
+)
+def lookup_flight_status(
+    flight_no: str = Query(..., description="Flight number, e.g. AI-101"),
+    travel_date: Optional[date] = Query(None, alias="date", description="Departure date (YYYY-MM-DD)"),
+):
+    """Returns flight status, schedule, and latest public safety inspection summary."""
+    return flight_service.lookup_flight_status(flight_no=flight_no, travel_date=travel_date)
+
+
+@router.get(
     "/{flight_id}",
     response_model=FlightDetail,
     summary="Get flight details by ID",

@@ -1,0 +1,216 @@
+/* ==========================================================================
+   Checkout & Booking Confirmation Page Styles
+   ========================================================================== */
+
+.checkout-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+@media (min-width: 992px) {
+  .checkout-grid {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Payment Method Tabs & Options
+   -------------------------------------------------------------------------- */
+.payment-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  background: var(--color-bg-page);
+  padding: var(--space-1);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.pay-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: var(--space-3) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  background: transparent;
+  transition: all var(--transition-fast);
+}
+
+.pay-tab-btn:hover {
+  color: var(--color-primary);
+}
+
+.pay-tab-btn.active {
+  background: white;
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.payment-pane {
+  display: none;
+  animation: fadeIn var(--transition-fast) forwards;
+}
+
+.payment-pane.active {
+  display: block;
+}
+
+/* Quick Bank Radio Chips */
+.bank-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 600px) {
+  .bank-chips-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.bank-chip-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.bank-chip-label:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.bank-chip-label input[type="radio"] {
+  display: none;
+}
+
+.bank-chip-label input[type="radio"]:checked + span {
+  color: var(--color-primary);
+}
+
+.bank-chip-label:has(input[type="radio"]:checked) {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  box-shadow: 0 0 0 2px var(--color-primary-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   Confirmation E-Ticket Styles
+   -------------------------------------------------------------------------- */
+.confirmation-page {
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-20);
+  background: radial-gradient(circle at 50% 10%, #ECFDF5 0%, #F8FAFC 70%);
+}
+
+.confirmation-card-wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.ticket-container {
+  background: white;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-floating);
+  overflow: hidden;
+  position: relative;
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, var(--color-navy), #133E72);
+  color: white;
+  padding: var(--space-6) var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-body {
+  padding: var(--space-8);
+}
+
+.ticket-pnr-banner {
+  background: var(--color-primary-light);
+  border: 2px dashed var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 600px) {
+  .ticket-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ticket-field-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.ticket-field-value {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-navy);
+}
+
+.ticket-barcode-footer {
+  border-top: 2px dashed var(--color-border);
+  padding-top: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* Printable Styles */
+@media print {
+  header, footer, .no-print, .stepper {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .ticket-container {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}

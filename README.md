@@ -112,8 +112,23 @@ Airlines_Management_System/
 │   │   ├── flight_conditions.py
 │   │   └── admin.py
 │   └── services/          # Pure business logic and SQL dispatch
-├── tests/                 # Automated test suite
-└── frontend/              # Frontend placeholder (.gitkeep only)
+├── tests/                 # Automated test suite (Phase 0-4)
+└── frontend/              # Complete modern responsive client interface
+    ├── index.html         # Landing page with hero animation & 3-tab search card
+    ├── search.html        # Flight search results with price & time filters
+    ├── seats.html         # Interactive cabin seat map (Business & Economy tiers)
+    ├── checkout.html      # Booking & multi-channel payment (UPI, Card, Netbanking, Wallet)
+    ├── confirmation.html  # PNR confirmation & printable e-ticket
+    ├── login.html         # Customer sign in
+    ├── register.html      # Customer registration
+    ├── my-bookings.html   # Booking management & seat cancellation
+    ├── manage.html        # PNR lookup & official boarding pass issuance
+    ├── status.html        # Public flight status & technical condition log
+    ├── staff/             # Internal role-guarded portal (Ground Staff, Pilots, Admin)
+    ├── css/               # Design tokens, base resets, components, and page styles
+    ├── js/                # Unified API client, JWT auth guards, and controllers
+    ├── ASSETS.md          # Open-source asset licensing and attribution
+    └── README.md          # Frontend architecture and deployment guide
 ```
 
 ---
@@ -147,16 +162,19 @@ Airlines_Management_System/
 - `POST /auth/register` - Customer registration
 - `POST /auth/login` - Customer JWT login
 - `POST /auth/staff/login` - Staff & Admin JWT login
+- `GET /auth/me` - Authenticated profile inspection
 
 ### Flights (`/flights`)
 - `GET /flights?from=BOM&to=DEL&date=YYYY-MM-DD` - Search flights with real-time seat counts
-- `GET /flights/{id}` - Flight details
-- `GET /flights/{id}/seats` - Seat map layout and availability
+- `GET /flights/airports` - Public airport listing for city search dropdowns
+- `GET /flights/status/lookup?flight_no=AI-101` - Public flight status and pre-flight safety check
+- `GET /flights/{id}` - Comprehensive flight specifications
+- `GET /flights/{id}/seats` - Physical cabin layout and seat availability
 
 ### Bookings (`/bookings`)
-- `POST /bookings` - Reserve a flight seat (invokes race-safe `book_seat()`)
-- `GET /bookings/me` - List customer's own bookings
-- `GET /bookings/{pnr}` - View booking details by PNR
+- `POST /bookings` - Reserve a flight seat (concurrency-safe `book_seat()`)
+- `GET /bookings/me` - List customer's own booking history
+- `GET /bookings/{pnr}` - View booking details by 6-character PNR
 - `POST /bookings/{id}/cancel` - Cancel booking and free seat (`cancel_booking()`)
 
 ### Payments (`/payments`)
@@ -164,13 +182,14 @@ Airlines_Management_System/
 - `GET /bookings/{id}/payments` - Retrieve payment records for a booking
 
 ### Check-in (`/checkin`)
-- `POST /checkin` - Ground staff check-in (validates confirmed booking, passport match, baggage, issues boarding pass)
-- `GET /checkin/{pnr}` - Retrieve check-in record and boarding pass
+- `POST /checkin` - Ground staff check-in (validates booking, passport match, baggage, issues boarding pass)
+- `GET /checkin/{pnr}` - Retrieve check-in record and digital boarding pass
 
 ### Flight Conditions & Status (`/flights/{id}`)
 - `POST /flights/{id}/conditions` - Pilot/Admin technical inspection log
 - `GET /flights/{id}/conditions` - Inspection log history
-- `PATCH /flights/{id}/status` - Update flight status (SCHEDULED, BOARDING, DEPARTED, etc.)
+- `GET /flights/{id}/conditions/latest` - Latest condition inspection
+- `PATCH /flights/{id}/status` - Operational status transition (SCHEDULED, BOARDING, DEPARTED, ARRIVED, DELAYED, CANCELLED)
 
 ### Admin (`/admin`)
 - CRUD operations for `airports`, `aircraft`, `flights`, `employees`
@@ -181,18 +200,17 @@ Airlines_Management_System/
 ## 7. Setup & Run Instructions
 
 ### Prerequisites
-1. **Python 3.11+** installed.
+1. **Python 3.11+ / 3.13** installed.
 2. **PostgreSQL** running locally and accessible via pgAdmin.
 
 ### Step-by-Step Setup
 1. **Clone the Repository**:
-   ```bash
+   ```powershell
    git clone https://github.com/Narayan-Singri/Airlines_Management_System.git
    cd Airlines_Management_System
    ```
-2. **Create and Activate Virtual Environment**:
+2. **Activate Virtual Environment**:
    ```powershell
-   python -m venv venv
    .\venv\Scripts\Activate.ps1
    ```
 3. **Install Dependencies**:
@@ -209,13 +227,20 @@ Airlines_Management_System/
    DB_PASSWORD=your_postgres_password
    ```
 5. **Database Initialization**:
-   - Open **pgAdmin**.
-   - Create a database named `airline_db`.
-   - Open Query Tool on `airline_db` and run `db/schema.sql` (or run `python db/seed.py`).
+   Run the seed script to apply schema and configure sample user credentials:
+   ```powershell
+   python db/seed.py
+   ```
 6. **Start the API Server**:
    ```powershell
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --reload --port 8000
    ```
-7. **Interactive API Documentation**:
+7. **Start the Frontend Web Application**:
+   ```powershell
+   python -m http.server 3000 --directory frontend
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+8. **Interactive API Documentation**:
    - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
    - ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)

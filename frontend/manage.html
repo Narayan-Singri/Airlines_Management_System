@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your booking, view check-in status, and print digital boarding passes on FlyNow Airlines.">
+  <title>Manage Booking & Check-in | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/bookings.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="bookings-page">
+    <div class="container" style="max-width: 840px;">
+      
+      <!-- Lookup Form Section (No Print) -->
+      <section class="card mb-8 no-print" aria-label="PNR lookup">
+        <h1 style="font-size: 1.75rem; margin-bottom: 6px;">Manage Booking & Check-in</h1>
+        <p class="text-sm text-muted mb-6">Enter your 6-character PNR code to retrieve reservation status or view your issued boarding pass.</p>
+
+        <form id="pnr-lookup-form" style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <div class="form-group" style="flex: 1; min-width: 220px;">
+            <div class="input-icon-wrapper">
+              <i data-lucide="hash" class="input-icon" style="width: 18px; height: 18px;"></i>
+              <input type="text" id="lookup-pnr" class="form-control" placeholder="6-digit PNR (e.g. 7A8B9C)" maxlength="6" style="text-transform: uppercase;" required>
+            </div>
+          </div>
+          <button type="submit" id="btn-find-booking" class="btn btn-primary" style="padding: 0.75rem 1.75rem;">
+            <i data-lucide="search" style="width: 16px; height: 16px;"></i> Retrieve Reservation
+          </button>
+        </form>
+      </section>
+
+      <!-- Results Display Container -->
+      <div id="booking-result-container">
+        <!-- Initial empty placeholder -->
+        <div class="card empty-state">
+          <div class="empty-state-icon">
+            <i data-lucide="ticket" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h3>Find Your Journey</h3>
+          <p class="text-sm text-muted">Enter your booking reference above to view your boarding pass or flight schedule.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/manage.js"></script>
+</body>
+</html>

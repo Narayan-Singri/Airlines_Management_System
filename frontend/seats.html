@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Select your preferred seat on FlyNow Airlines. Live physical cabin seat map with Business and Economy tiers.">
+  <title>Choose Your Seat | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/seats.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="seats-page">
+    <div class="container">
+
+      <!-- STEPPER NAVIGATION -->
+      <nav class="stepper" aria-label="Booking progress">
+        <a href="/search.html" class="step-item completed">
+          <div class="step-number"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
+          <span>Select Flight</span>
+        </a>
+        <div class="step-divider"></div>
+        <div class="step-item active">
+          <div class="step-number">2</div>
+          <span>Choose Seats</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <span>Review & Pay</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <span>Confirmation</span>
+        </div>
+      </nav>
+
+      <!-- FLIGHT HEADER SUMMARY -->
+      <section id="flight-header-summary" class="flight-header-card" aria-label="Flight overview">
+        <!-- Loaded via JS -->
+        <div class="skeleton" style="width: 280px; height: 36px;"></div>
+        <div class="skeleton" style="width: 200px; height: 36px;"></div>
+      </section>
+
+      <!-- SEAT SELECTION MAIN GRID -->
+      <div class="seat-selection-grid">
+        
+        <!-- FUSELAGE CABIN MAP (LEFT) -->
+        <section class="fuselage-card" aria-label="Aircraft cabin seat map">
+          <div class="cockpit-nose">Cockpit</div>
+
+          <!-- Legend Bar -->
+          <div class="seat-legend">
+            <div class="legend-item">
+              <div class="legend-sample legend-econ"></div>
+              <span>Economy</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-sample legend-biz"></div>
+              <span>Business</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-sample legend-selected"></div>
+              <span>Selected</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-sample legend-booked"></div>
+              <span>Unavailable</span>
+            </div>
+          </div>
+
+          <!-- Cabin Column Labels -->
+          <div class="seat-column-labels" aria-hidden="true">
+            <span>A</span><span>B</span><span>C</span>
+            <span style="color: var(--color-primary); font-size: 10px;">AISLE</span>
+            <span>D</span><span>E</span><span>F</span>
+          </div>
+
+          <!-- Dynamic Cabin Rows Container -->
+          <div id="cabin-rows-container" class="cabin-container">
+            <div class="skeleton" style="height: 380px; border-radius: var(--radius-lg);"></div>
+          </div>
+        </section>
+
+        <!-- BOOKING & FARE SUMMARY SIDEBAR (RIGHT) -->
+        <aside class="seat-summary-sidebar" aria-label="Fare summary">
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--space-4);">Booking Summary</h3>
+
+          <div style="background-color: var(--color-bg-page); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-6); border: 1px solid var(--color-border);">
+            <div class="text-xs text-muted mb-1">Flight</div>
+            <div id="summary-flight-no" class="font-bold" style="color: var(--color-navy);">-</div>
+            <div id="summary-flight-route" class="text-sm font-semibold" style="color: var(--color-primary); margin-top: 2px;">-</div>
+            <div id="summary-flight-time" class="text-xs text-muted" style="margin-top: 4px;">-</div>
+          </div>
+
+          <!-- Selected Seat Notice -->
+          <div style="margin-bottom: var(--space-6);">
+            <div class="text-xs font-bold text-muted" style="text-transform: uppercase; margin-bottom: 8px;">Selected Seat</div>
+            <div id="selected-seat-badge" class="badge" style="background-color: var(--color-primary-light); color: var(--color-primary); padding: 8px 14px; font-size: 14px;">
+              <i data-lucide="help-circle" style="width: 16px; height: 16px;"></i>
+              <span>No seat selected</span>
+            </div>
+          </div>
+
+          <!-- Fare Breakdown -->
+          <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-4);">
+            <div class="summary-breakdown-row">
+              <span>Seat Fare</span>
+              <span id="fare-base-amount" class="font-semibold">₹0</span>
+            </div>
+            <div class="summary-breakdown-row">
+              <span>Airport Development Fee</span>
+              <span class="font-semibold">₹350</span>
+            </div>
+            <div class="summary-breakdown-row">
+              <span>Aviation Security & GST</span>
+              <span class="font-semibold">₹250</span>
+            </div>
+            <div class="summary-breakdown-row total-row">
+              <span>Total Amount</span>
+              <span id="fare-total-amount">₹0</span>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <button id="btn-proceed-booking" class="btn btn-primary btn-lg btn-block mt-6" disabled>
+            <span>Continue to Payment</span>
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </button>
+          <p class="text-xs text-muted text-center mt-3">
+            <i data-lucide="lock" style="width: 12px; height: 12px; display: inline;"></i> Row-locked reservation prevents double booking
+          </p>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <!-- Page Logic -->
+  <script type="module" src="js/pages/seats.js"></script>
+</body>
+</html>

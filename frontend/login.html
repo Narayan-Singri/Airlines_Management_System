@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to your FlyNow customer account to manage bookings and check in.">
+  <title>Customer Sign In | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/auth.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="auth-page">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="logo-icon" style="margin: 0 auto var(--space-3) auto;">
+          <i data-lucide="plane-takeoff" style="width: 20px; height: 20px;"></i>
+        </div>
+        <h2>Welcome Back</h2>
+        <p class="text-sm text-muted">Sign in to book flights, choose seats, and download boarding passes.</p>
+      </div>
+
+      <!-- Demo Credentials Quick-Fill Banner -->
+      <div class="auth-demo-box">
+        <div>
+          <strong>Demo Customer:</strong> test@mail.test / Customer@123
+        </div>
+        <button type="button" id="btn-demo-customer" class="btn btn-sm btn-outline">
+          Auto-fill
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="customer-login-form">
+        <div class="form-group mb-4">
+          <label class="form-label" for="login-email">Email Address</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="mail" class="input-icon" style="width: 18px; height: 18px;"></i>
+            <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group mb-6">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="lock" class="input-icon" style="width: 18px; height: 18px;"></i>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="btn btn-primary btn-lg btn-block">
+          <span>Sign In</span>
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <p>Don't have an account? <a href="/register.html">Create one here</a></p>
+        <p class="mt-4 text-xs text-muted">
+          Airline crew or ground staff? <a href="/staff/login.html">Staff Portal</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/login.js"></script>
+</body>
+</html>

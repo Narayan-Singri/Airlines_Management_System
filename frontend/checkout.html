@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review passenger details and securely complete your flight reservation payment on FlyNow Airlines.">
+  <title>Review & Payment | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/checkout.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="checkout-page">
+    <div class="container">
+
+      <!-- STEPPER NAVIGATION -->
+      <nav class="stepper" aria-label="Booking progress">
+        <a href="/search.html" class="step-item completed">
+          <div class="step-number"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
+          <span>Select Flight</span>
+        </a>
+        <div class="step-divider"></div>
+        <a href="/seats.html" id="stepper-seats-link" class="step-item completed">
+          <div class="step-number"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
+          <span>Choose Seats</span>
+        </a>
+        <div class="step-divider"></div>
+        <div class="step-item active">
+          <div class="step-number">3</div>
+          <span>Review & Pay</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <span>Confirmation</span>
+        </div>
+      </nav>
+
+      <!-- CHECKOUT MAIN GRID -->
+      <div class="checkout-grid">
+
+        <!-- LEFT COLUMN: PASSENGER DETAILS & PAYMENT METHOD -->
+        <div>
+          <!-- Passenger Details Card -->
+          <div class="card mb-6">
+            <h3 style="font-size: 1.25rem; margin-bottom: var(--space-4); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="user" style="color: var(--color-primary); width: 20px; height: 20px;"></i>
+              <span>Passenger Information</span>
+            </h3>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="passenger-name">Full Name (As on Passport / Govt ID)</label>
+                <input type="text" id="passenger-name" class="form-control" required readonly>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                <div class="form-group">
+                  <label class="form-label" for="passenger-email">Email Address</label>
+                  <input type="email" id="passenger-email" class="form-control" required readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="passenger-phone">Phone Number</label>
+                  <input type="tel" id="passenger-phone" class="form-control" placeholder="+91 9876543210">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="passenger-passport">Passport Number</label>
+                <input type="text" id="passenger-passport" class="form-control" placeholder="A12345678" style="text-transform: uppercase;">
+                <span class="text-xs text-muted">Required for check-in passport validation at ground desk.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Gateway Card -->
+          <div class="card">
+            <h3 style="font-size: 1.25rem; margin-bottom: var(--space-2); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="credit-card" style="color: var(--color-primary); width: 20px; height: 20px;"></i>
+              <span>Payment Gateway</span>
+            </h3>
+            <p class="text-xs text-muted mb-4">Select your preferred payment channel. Instant confirmation triggers upon payment.</p>
+
+            <!-- Payment Tabs -->
+            <div class="payment-tabs" role="tablist">
+              <button type="button" class="pay-tab-btn active" data-method="UPI" role="tab" aria-selected="true">
+                <i data-lucide="smartphone" style="width: 18px; height: 18px;"></i>
+                <span>UPI</span>
+              </button>
+              <button type="button" class="pay-tab-btn" data-method="CARD" role="tab" aria-selected="false">
+                <i data-lucide="credit-card" style="width: 18px; height: 18px;"></i>
+                <span>Card</span>
+              </button>
+              <button type="button" class="pay-tab-btn" data-method="NETBANKING" role="tab" aria-selected="false">
+                <i data-lucide="landmark" style="width: 18px; height: 18px;"></i>
+                <span>Netbanking</span>
+              </button>
+              <button type="button" class="pay-tab-btn" data-method="WALLET" role="tab" aria-selected="false">
+                <i data-lucide="wallet" style="width: 18px; height: 18px;"></i>
+                <span>Wallet</span>
+              </button>
+            </div>
+
+            <!-- Tab 1: UPI -->
+            <div id="pane-UPI" class="payment-pane active">
+              <div class="form-group mb-3">
+                <label class="form-label" for="upi-vpa">Virtual Payment Address (VPA)</label>
+                <input type="text" id="upi-vpa" class="form-control" placeholder="username@upi" value="passenger@okaxis">
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline btn-xs upi-chip" data-vpa="@okhdfcbank">@okhdfcbank</button>
+                <button type="button" class="btn btn-outline btn-xs upi-chip" data-vpa="@okicici">@okicici</button>
+                <button type="button" class="btn btn-outline btn-xs upi-chip" data-vpa="@oksbi">@oksbi</button>
+                <button type="button" class="btn btn-outline btn-xs upi-chip" data-vpa="@paytm">@paytm</button>
+              </div>
+            </div>
+
+            <!-- Tab 2: CARD -->
+            <div id="pane-CARD" class="payment-pane">
+              <div class="form-group mb-3">
+                <label class="form-label" for="card-number">Card Number</label>
+                <input type="text" id="card-number" class="form-control" placeholder="4532 •••• •••• ••••" maxlength="19" value="4532 8901 2345 6789">
+              </div>
+              <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--space-3);">
+                <div class="form-group">
+                  <label class="form-label" for="card-holder">Name on Card</label>
+                  <input type="text" id="card-holder" class="form-control" placeholder="Cardholder Name" value="Passenger Name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="card-expiry">Expiry</label>
+                  <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY" maxlength="5" value="12/28">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="card-cvv">CVV</label>
+                  <input type="password" id="card-cvv" class="form-control" placeholder="•••" maxlength="4" value="123">
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: NETBANKING -->
+            <div id="pane-NETBANKING" class="payment-pane">
+              <label class="form-label">Select Your Bank</label>
+              <div class="bank-chips-grid">
+                <label class="bank-chip-label">
+                  <input type="radio" name="bank_select" value="HDFC" checked>
+                  <span>HDFC Bank</span>
+                </label>
+                <label class="bank-chip-label">
+                  <input type="radio" name="bank_select" value="ICICI">
+                  <span>ICICI Bank</span>
+                </label>
+                <label class="bank-chip-label">
+                  <input type="radio" name="bank_select" value="SBI">
+                  <span>State Bank of India</span>
+                </label>
+                <label class="bank-chip-label">
+                  <input type="radio" name="bank_select" value="AXIS">
+                  <span>Axis Bank</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Tab 4: WALLET -->
+            <div id="pane-WALLET" class="payment-pane">
+              <label class="form-label">Select Digital Wallet</label>
+              <div class="bank-chips-grid">
+                <label class="bank-chip-label">
+                  <input type="radio" name="wallet_select" value="PHONEPE" checked>
+                  <span>PhonePe</span>
+                </label>
+                <label class="bank-chip-label">
+                  <input type="radio" name="wallet_select" value="PAYTM">
+                  <span>PayTM Wallet</span>
+                </label>
+                <label class="bank-chip-label">
+                  <input type="radio" name="wallet_select" value="AMAZONPAY">
+                  <span>Amazon Pay</span>
+                </label>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: var(--space-6); color: var(--color-text-muted); font-size: var(--font-size-xs);">
+              <i data-lucide="shield-check" style="width: 16px; height: 16px; color: var(--color-success);"></i>
+              <span>256-bit encrypted checkout. Certified PCI-DSS simulated test payment environment.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: ORDER SUMMARY & CONFIRM BUTTON -->
+        <aside class="seat-summary-sidebar" aria-label="Order summary">
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--space-4);">Trip Summary</h3>
+
+          <div style="background-color: var(--color-bg-page); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-4); border: 1px solid var(--color-border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span id="checkout-flight-no" class="font-bold" style="color: var(--color-navy);">-</span>
+              <span id="checkout-class-badge" class="badge badge-economy">Economy</span>
+            </div>
+            <div id="checkout-route" class="text-sm font-semibold" style="color: var(--color-primary);">-</div>
+            <div id="checkout-time" class="text-xs text-muted" style="margin-top: 4px;">-</div>
+            <div id="checkout-aircraft" class="text-xs text-muted" style="margin-top: 2px;">-</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4); background: white; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+            <span class="text-xs font-bold text-muted">CONFIRMED SEAT:</span>
+            <span id="checkout-seat-no" class="font-extrabold text-lg" style="color: var(--color-primary);">-</span>
+          </div>
+
+          <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-4);">
+            <div class="summary-breakdown-row">
+              <span>Base Seat Fare</span>
+              <span id="checkout-base-fare" class="font-semibold">₹0</span>
+            </div>
+            <div class="summary-breakdown-row">
+              <span>Airport Development Fee</span>
+              <span class="font-semibold">₹350</span>
+            </div>
+            <div class="summary-breakdown-row">
+              <span>Aviation Security & GST</span>
+              <span class="font-semibold">₹250</span>
+            </div>
+            <div class="summary-breakdown-row total-row">
+              <span>Total Payable</span>
+              <span id="checkout-total-amount">₹0</span>
+            </div>
+          </div>
+
+          <button id="btn-pay-confirm" class="btn btn-primary btn-lg btn-block mt-6">
+            <span>Pay & Confirm Booking</span>
+            <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+          </button>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/checkout.js"></script>
+</body>
+</html>

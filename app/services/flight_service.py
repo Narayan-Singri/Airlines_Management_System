@@ -92,3 +92,46 @@ def get_flight_seats(flight_id: int) -> List[SeatItem]:
     """
     rows = fetch_all(query, (flight_id,))
     return [SeatItem(**r) for r in rows]
+
+
+def list_airports_public():
+    """Retrieves all registered airports sorted by city and name for public dropdowns."""
+    query = """
+    SELECT airport_id, iata_code, name, city, country
+    FROM airport
+    ORDER BY city ASC, name ASC;
+    """
+    return fetch_all(query)
+
+
+def lookup_flight_status(flight_no: str, travel_date: Optional[date] = None):
+    """Looks up flight status and latest public-safe condition by flight number and optional date."""
+    conditions = ["f.flight_no = %s"]
+    params = [flight_no.strip().upper()]
+
+    if travel_date:
+        conditions.append("f.departure_time::date = %s")
+        params.append(travel_date)
+
+    where_clause = "WHERE " + " AND ".join(conditions)
+    query = f"""
+    SELECT f.flight_id, f.flight_no, f.departure_time, f.arrival_time, f.status,
+           o.iata_code AS origin, o.city AS origin_city, o.name AS origin_name,
+           d.iata_code AS destination, d.city AS destination_city, d.name AS destination_name,
+           a.model AS aircraft_model,
+           fc.overall AS overall_condition, fc.weather AS weather_conditions, fc.checked_at AS condition_recorded_at
+    FROM flight f
+    JOIN airport o ON o.airport_id = f.origin_id
+    JOIN airport d ON d.airport_id = f.destination_id
+    JOIN aircraft a ON a.aircraft_id = f.aircraft_id
+    LEFT JOIN LATERAL (
+        SELECT overall, weather, checked_at
+        FROM flight_condition
+        WHERE flight_id = f.flight_id
+        ORDER BY checked_at DESC
+        LIMIT 1
+    ) fc ON TRUE
+    {where_clause}
+    ORDER BY f.departure_time DESC;
+    """
+    return fetch_all(query, tuple(params))

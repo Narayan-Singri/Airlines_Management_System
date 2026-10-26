@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Seat Selection Page Styles
+   ========================================================================== */
+
+.seats-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+/* --------------------------------------------------------------------------
+   Flight Summary Header Card
+   -------------------------------------------------------------------------- */
+.flight-header-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .flight-header-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Seats Layout Grid (Cabin on Left, Summary on Right)
+   -------------------------------------------------------------------------- */
+.seat-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+@media (min-width: 992px) {
+  .seat-selection-grid {
+    grid-template-columns: 1fr 360px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Fuselage & Cabin Container
+   -------------------------------------------------------------------------- */
+.fuselage-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8) var(--space-6);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cockpit-nose {
+  width: 140px;
+  height: 48px;
+  background: linear-gradient(180deg, #F1F5F9 0%, white 100%);
+  border: 2px solid var(--color-border);
+  border-bottom: none;
+  border-radius: 70px 70px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Seat Map Legend */
+.seat-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-bg-page);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-8);
+  border: 1px solid var(--color-border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.legend-sample {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+}
+
+.legend-econ {
+  background-color: white;
+  border: 1.5px solid var(--color-border);
+}
+
+.legend-biz {
+  background-color: #FEF3C7;
+  border: 1.5px solid #F59E0B;
+}
+
+.legend-selected {
+  background-color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.legend-booked {
+  background-color: #E2E8F0;
+  border: 1.5px solid #CBD5E1;
+  position: relative;
+}
+
+.legend-booked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background-color: #94A3B8;
+  transform: rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Seat Grid & Cabin Rows
+   -------------------------------------------------------------------------- */
+.cabin-container {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cabin-section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin: var(--space-4) 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cabin-section-divider::before,
+.cabin-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.seat-column-labels {
+  display: grid;
+  grid-template-columns: repeat(3, 44px) 36px repeat(3, 44px);
+  gap: 8px;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.seat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 44px) 36px repeat(3, 44px);
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-number {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+}
+
+/* Seat Button Component */
+.seat-btn {
+  width: 44px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+  border: 1.5px solid var(--color-border);
+  background-color: white;
+  color: var(--color-navy);
+}
+
+.seat-btn:hover:not(:disabled):not(.selected) {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(19, 99, 223, 0.2);
+}
+
+.seat-btn.business {
+  background-color: #FFFDF5;
+  border-color: #FCD34D;
+  color: #92400E;
+}
+
+.seat-btn.business:hover:not(:disabled):not(.selected) {
+  border-color: #F59E0B;
+  background-color: #FEF3C7;
+}
+
+.seat-btn.selected {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(19, 99, 223, 0.4);
+  transform: scale(1.05);
+}
+
+.seat-btn:disabled {
+  background-color: #F1F5F9;
+  border-color: #E2E8F0;
+  color: #94A3B8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.seat-btn:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 6px;
+  right: 6px;
+  height: 1.5px;
+  background-color: #CBD5E1;
+  transform: rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar Summary Card
+   -------------------------------------------------------------------------- */
+.seat-summary-sidebar {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+}
+
+.summary-breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.summary-breakdown-row.total-row {
+  border-top: 2px dashed var(--color-border);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-navy);
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Status Operations | Staff Portal</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/staff.css">
+</head>
+<body class="staff-body">
+
+  <!-- Staff Navbar -->
+  <header class="staff-navbar">
+    <div class="container flex items-center justify-between">
+      <div class="staff-nav-brand">
+        <i data-lucide="shield" style="color: var(--color-accent); width: 22px; height: 22px;"></i>
+        <span>FlyNow Operations Desk</span>
+        <span class="staff-badge" id="staff-role-badge">STAFF</span>
+      </div>
+
+      <nav class="staff-nav-links">
+        <a href="/staff/checkin.html" class="staff-nav-link">
+          <i data-lucide="check-square" style="width: 16px; height: 16px;"></i> Check-in Desk
+        </a>
+        <a href="/staff/conditions.html" class="staff-nav-link">
+          <i data-lucide="clipboard-check" style="width: 16px; height: 16px;"></i> Flight Conditions
+        </a>
+        <a href="/staff/flight-status.html" class="staff-nav-link active">
+          <i data-lucide="activity" style="width: 16px; height: 16px;"></i> Flight Status Ops
+        </a>
+        <button type="button" id="btn-staff-logout" class="btn btn-outline btn-sm" style="color: #94A3B8; border-color: #334155;">
+          <i data-lucide="log-out" style="width: 14px; height: 14px;"></i> Sign Out
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="padding: var(--space-8) 0;">
+    <div class="container" style="max-width: 800px;">
+
+      <section class="staff-card mb-8">
+        <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Flight Operational Status Control</h2>
+        <p class="text-xs text-muted mb-6" style="color: #94A3B8;">Transition flight schedules through active operational states. Updates reflect immediately across passenger searches and airport status boards.</p>
+
+        <!-- Flight Selector -->
+        <div class="form-group mb-6">
+          <label class="form-label" for="ops-flight-select" style="color: #94A3B8;">Select Flight Schedule</label>
+          <select id="ops-flight-select" class="form-control staff-input">
+            <option value="">Loading Scheduled Flights...</option>
+          </select>
+        </div>
+
+        <!-- Current Status Overview Display -->
+        <div id="ops-flight-overview" style="background: #0F172A; border-radius: 8px; padding: 20px; border: 1px solid #334155; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="text-xs text-muted">Current Operational State</div>
+              <div id="current-status-display" class="font-extrabold text-2xl mt-1" style="color: #38BDF8;">-</div>
+            </div>
+            <div id="current-route-display" class="text-sm font-bold text-muted">-</div>
+          </div>
+        </div>
+
+        <!-- Transition Controls -->
+        <div class="form-group">
+          <label class="form-label" style="color: #94A3B8; margin-bottom: 12px;">Trigger Status Transition</label>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;" id="status-button-grid">
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="SCHEDULED" style="color: #38BDF8; border-color: #334155;">
+              🔵 SCHEDULED
+            </button>
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="BOARDING" style="color: #F59E0B; border-color: #334155;">
+              🟡 BOARDING
+            </button>
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="DEPARTED" style="color: #8B5CF6; border-color: #334155;">
+              🟣 DEPARTED
+            </button>
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="ARRIVED" style="color: #10B981; border-color: #334155;">
+              🟢 ARRIVED
+            </button>
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="DELAYED" style="color: #F97316; border-color: #334155;">
+              🟠 DELAYED
+            </button>
+            <button type="button" class="btn btn-outline btn-status-trigger" data-status="CANCELLED" style="color: #EF4444; border-color: #334155;">
+              🔴 CANCELLED
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script type="module" src="../js/pages/staff-status.js"></script>
+</body>
+</html>

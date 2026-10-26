@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FlyNow Airlines - Book your dream flights with transparent fares, live interactive seat selection, instant check-in, and real-time flight tracking.">
+  <title>FlyNow Airlines | Book Your Dream Flights Now</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/home.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" aria-label="Hero Section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-headline">
+            Book Your Dream <br>
+            <span class="text-primary-gradient">Flights</span> Now!
+          </h1>
+          <p class="hero-subtitle">
+            Experience next-generation air travel with real-time seat reservation, transparent fares, and instant boarding passes powered by our high-performance PostgreSQL architecture.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#flight-search-card" class="btn btn-primary btn-lg">
+              <i data-lucide="plane" style="width: 20px; height: 20px;"></i> Book Now
+            </a>
+            <a href="/status.html" class="btn btn-outline btn-lg">
+              <i data-lucide="activity" style="width: 18px; height: 18px;"></i> Flight Status
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual-wrapper">
+          <!-- Animated Dashed Flight Path SVG -->
+          <svg class="flight-path-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Curved dashed flight trajectory -->
+            <path id="hero-flight-path" d="M 40,260 C 120,320 220,180 180,120 C 140,60 300,40 450,90" 
+                  stroke="#1363DF" stroke-width="2.5" stroke-linecap="round" class="dashed-flight-path" stroke-opacity="0.4"/>
+            <!-- Secondary ambient dashed loop -->
+            <path d="M 120,280 C 180,310 240,260 210,210 C 180,160 320,140 420,170" 
+                  stroke="#FF6B35" stroke-width="1.5" stroke-dasharray="4,6" stroke-linecap="round" stroke-opacity="0.35"/>
+            <!-- Destination Pin -->
+            <g transform="translate(440, 75)">
+              <circle cx="10" cy="10" r="16" fill="rgba(19, 99, 223, 0.15)"/>
+              <circle cx="10" cy="10" r="8" fill="#1363DF"/>
+              <circle cx="10" cy="10" r="3" fill="#FFFFFF"/>
+            </g>
+          </svg>
+
+          <!-- Original Vector Airplane Graphic -->
+          <div class="hero-airplane-container" aria-label="Commercial airliner illustration">
+            <svg width="420" height="230" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="fuselage-grad" x1="50" y1="120" x2="450" y2="120" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#E2E8F0" />
+                  <stop offset="35%" stop-color="#FFFFFF" />
+                  <stop offset="70%" stop-color="#F1F5F9" />
+                  <stop offset="100%" stop-color="#CBD5E1" />
+                </linearGradient>
+                <linearGradient id="tail-grad" x1="380" y1="30" x2="480" y2="120" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#1363DF" />
+                  <stop offset="70%" stop-color="#0B2545" />
+                  <stop offset="100%" stop-color="#FF6B35" />
+                </linearGradient>
+                <linearGradient id="wing-grad" x1="160" y1="130" x2="330" y2="240" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#E2E8F0" />
+                  <stop offset="50%" stop-color="#CBD5E1" />
+                  <stop offset="100%" stop-color="#94A3B8" />
+                </linearGradient>
+                <linearGradient id="engine-grad" x1="220" y1="160" x2="290" y2="210" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#334155" />
+                  <stop offset="60%" stop-color="#1E293B" />
+                  <stop offset="100%" stop-color="#0F172A" />
+                </linearGradient>
+              </defs>
+
+              <!-- Far Wing (Behind Fuselage) -->
+              <path d="M 230,110 L 320,40 L 360,45 L 290,115 Z" fill="#94A3B8" opacity="0.85"/>
+              
+              <!-- Tail Fin -->
+              <path d="M 380,120 L 440,30 L 485,32 L 445,128 Z" fill="url(#tail-grad)"/>
+              <!-- Tail Stripe Accent -->
+              <path d="M 430,45 L 445,30 L 460,31 L 438,55 Z" fill="#FF6B35"/>
+              <path d="M 418,65 L 438,55 L 452,56 L 424,80 Z" fill="#00A3FF"/>
+
+              <!-- Main Fuselage -->
+              <path d="M 50,140 C 50,110 130,95 240,95 C 380,95 440,110 460,128 C 470,136 460,145 430,150 C 350,165 190,165 100,162 C 60,160 50,155 50,140 Z" 
+                    fill="url(#fuselage-grad)" stroke="#CBD5E1" stroke-width="1.5"/>
+
+              <!-- Cockpit Windows -->
+              <path d="M 75,130 Q 95,122 110,123 L 115,132 Q 95,133 75,137 Z" fill="#0B2545"/>
+              <path d="M 85,128 Q 98,124 108,125" stroke="#38BDF8" stroke-width="1.5"/>
+
+              <!-- Passenger Windows -->
+              <g fill="#1E293B" opacity="0.8">
+                <circle cx="140" cy="132" r="3.5"/><circle cx="155" cy="132" r="3.5"/>
+                <circle cx="170" cy="132" r="3.5"/><circle cx="185" cy="132" r="3.5"/>
+                <circle cx="200" cy="132" r="3.5"/><circle cx="215" cy="132" r="3.5"/>
+                <circle cx="230" cy="132" r="3.5"/><circle cx="245" cy="132" r="3.5"/>
+                <circle cx="260" cy="132" r="3.5"/><circle cx="275" cy="132" r="3.5"/>
+                <circle cx="290" cy="132" r="3.5"/><circle cx="305" cy="132" r="3.5"/>
+                <circle cx="320" cy="132" r="3.5"/><circle cx="335" cy="132" r="3.5"/>
+                <circle cx="350" cy="132" r="3.5"/><circle cx="365" cy="132" r="3.5"/>
+              </g>
+
+              <!-- Near Wing (Front) -->
+              <path d="M 200,145 L 290,225 L 345,220 L 305,145 Z" fill="url(#wing-grad)" stroke="#94A3B8" stroke-width="1"/>
+              <!-- Wingtip Winglet -->
+              <path d="M 335,220 L 350,195 L 345,220 Z" fill="#1363DF"/>
+
+              <!-- Jet Engine Turbine -->
+              <g transform="translate(240, 165)">
+                <ellipse cx="25" cy="22" rx="14" ry="22" fill="#0B2545"/>
+                <ellipse cx="23" cy="22" rx="12" ry="19" fill="url(#engine-grad)"/>
+                <circle cx="23" cy="22" r="6" fill="#64748B"/>
+                <!-- Engine Cowling -->
+                <path d="M 23,2 L 65,10 Q 75,22 65,34 L 23,42 Z" fill="#E2E8F0" stroke="#CBD5E1"/>
+                <path d="M 25,6 L 60,13 L 60,18 L 25,12 Z" fill="#1363DF"/>
+              </g>
+
+              <!-- Subtle Drop Shadow under aircraft -->
+              <ellipse cx="260" cy="250" rx="140" ry="12" fill="rgba(11, 37, 69, 0.08)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOATING SEARCH CARD -->
+    <div class="container hero-search-container" id="flight-search-card">
+      <div class="search-card">
+        <!-- Tabs Header -->
+        <div class="search-tabs" role="tablist" aria-label="Flight Services Tabs">
+          <button class="search-tab-btn active" role="tab" aria-selected="true" data-tab="tab-search" id="tab-btn-search">
+            <i data-lucide="plane" style="width: 18px; height: 18px;"></i> Search Flights
+          </button>
+          <button class="search-tab-btn" role="tab" aria-selected="false" data-tab="tab-manage" id="tab-btn-manage">
+            <i data-lucide="ticket" style="width: 18px; height: 18px;"></i> Manage Booking & Check-in
+          </button>
+          <button class="search-tab-btn" role="tab" aria-selected="false" data-tab="tab-status" id="tab-btn-status">
+            <i data-lucide="clock" style="width: 18px; height: 18px;"></i> Flight Status
+          </button>
+        </div>
+
+        <!-- TAB 1: SEARCH FLIGHTS -->
+        <div id="tab-search" class="tab-pane active" role="tabpanel" aria-labelledby="tab-btn-search">
+          <form id="flight-search-form">
+            <!-- Trip Type Radios -->
+            <div class="trip-type-group">
+              <label class="radio-label">
+                <input type="radio" name="trip_type" value="oneway" checked>
+                <span>One way</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="trip_type" value="roundtrip">
+                <span>Round-trip</span>
+              </label>
+            </div>
+
+            <!-- Fields Grid -->
+            <div class="route-picker-grid">
+              <!-- Origin City -->
+              <div class="form-group">
+                <label class="form-label" for="search-from">From</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="map-pin" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <select id="search-from" class="form-control" required>
+                    <option value="">Select Origin City</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Swap Button -->
+              <div class="swap-btn-container">
+                <button type="button" id="btn-swap-cities" class="btn-swap" aria-label="Swap Origin and Destination" title="Swap Cities">
+                  <i data-lucide="arrow-left-right" style="width: 16px; height: 16px;"></i>
+                </button>
+              </div>
+
+              <!-- Destination City -->
+              <div class="form-group">
+                <label class="form-label" for="search-to">To</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="map-pin" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <select id="search-to" class="form-control" required>
+                    <option value="">Select Destination City</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Departure Date -->
+              <div class="form-group">
+                <label class="form-label" for="search-depart-date">Departing</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="calendar" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <input type="date" id="search-depart-date" class="form-control" required>
+                </div>
+              </div>
+
+              <!-- Return Date -->
+              <div class="form-group" id="return-date-group" style="opacity: 0.5;">
+                <label class="form-label" for="search-return-date">Returning</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="calendar" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <input type="date" id="search-return-date" class="form-control" disabled>
+                </div>
+              </div>
+
+              <!-- Passengers & Class -->
+              <div class="form-group" style="position: relative;">
+                <label class="form-label" for="passenger-selector-btn">Passengers & Class</label>
+                <button type="button" id="passenger-selector-btn" class="form-control" style="text-align: left; display: flex; align-items: center; justify-content: space-between;">
+                  <span id="passenger-summary-text">1 Passenger / Economy</span>
+                  <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--color-text-muted);"></i>
+                </button>
+
+                <!-- Popover -->
+                <div id="passenger-popover" class="passenger-picker-popover">
+                  <div class="passenger-counter-row">
+                    <div>
+                      <div class="font-semibold" style="font-size: 14px;">Adults</div>
+                      <div class="text-xs text-muted">Age 12+</div>
+                    </div>
+                    <div class="counter-controls">
+                      <button type="button" class="counter-btn" id="btn-adults-minus" disabled>-</button>
+                      <span id="adults-count" class="font-bold">1</span>
+                      <button type="button" class="counter-btn" id="btn-adults-plus">+</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label class="form-label">Cabin Class</label>
+                    <select id="cabin-class-select" class="form-control">
+                      <option value="ECONOMY" selected>Economy</option>
+                      <option value="BUSINESS">Business Class</option>
+                    </select>
+                  </div>
+
+                  <button type="button" id="btn-apply-passengers" class="btn btn-primary btn-sm btn-block mt-4">
+                    Apply
+                  </button>
+                </div>
+              </div>
+
+              <!-- Submit CTA -->
+              <div class="form-group">
+                <label class="form-label" style="visibility: hidden;">Search</label>
+                <button type="submit" class="btn btn-primary btn-block" style="padding: 0.75rem 1.5rem;" id="btn-search-submit">
+                  <span>Show Flight</span>
+                  <i data-lucide="plane-takeoff" style="width: 18px; height: 18px;"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 2: MANAGE BOOKING & CHECK-IN -->
+        <div id="tab-manage" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-manage">
+          <form id="quick-manage-form" style="max-width: 680px; margin: 0 auto;">
+            <div style="margin-bottom: var(--space-4); text-align: center;">
+              <h3 style="margin-bottom: 4px;">Look Up Your Reservation</h3>
+              <p class="text-sm text-muted">Enter your 6-character PNR code and last name to view status or generate boarding pass.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label" for="manage-pnr">Booking Reference (PNR)</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="hash" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <input type="text" id="manage-pnr" class="form-control" placeholder="e.g. 7A8B9C" maxlength="6" style="text-transform: uppercase;" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-accent btn-lg btn-block" style="margin-top: var(--space-2);">
+                <i data-lucide="search" style="width: 18px; height: 18px;"></i> Retrieve Booking
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 3: FLIGHT STATUS -->
+        <div id="tab-status" class="tab-pane" role="tabpanel" aria-labelledby="tab-btn-status">
+          <form id="quick-status-form" style="max-width: 680px; margin: 0 auto;">
+            <div style="margin-bottom: var(--space-4); text-align: center;">
+              <h3 style="margin-bottom: 4px;">Real-Time Flight Tracker</h3>
+              <p class="text-sm text-muted">Check operational departure/arrival times and public safety inspection ratings.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--space-4); align-items: flex-end;">
+              <div class="form-group">
+                <label class="form-label" for="status-flight-no">Flight Number</label>
+                <div class="input-icon-wrapper">
+                  <i data-lucide="plane" class="input-icon" style="width: 18px; height: 18px;"></i>
+                  <input type="text" id="status-flight-no" class="form-control" placeholder="e.g. AI-101" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="status-date">Date</label>
+                <input type="date" id="status-date" class="form-control">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" style="padding: 0.75rem 1.5rem;">
+                  <i data-lucide="search" style="width: 18px; height: 18px;"></i> Track
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPULAR ROUTES SECTION -->
+    <section class="section-routes" id="popular-routes" aria-label="Popular Routes">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Featured Flights</span>
+          <h2>Popular Domestic & Metro Routes</h2>
+          <p>Hand-picked non-stop flights with guaranteed dynamic seat availability and transparent base pricing.</p>
+        </div>
+
+        <div id="popular-routes-grid" class="routes-grid">
+          <!-- Populated dynamically via JS -->
+          <div class="skeleton" style="height: 180px;"></div>
+          <div class="skeleton" style="height: 180px;"></div>
+          <div class="skeleton" style="height: 180px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY FLY WITH US -->
+    <section class="section-features" id="why-us" aria-label="Why Fly With Us">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">FlyNow Excellence</span>
+          <h2>Why Choose FlyNow Airlines</h2>
+          <p>Engineered for reliability, transparent booking integrity, and unmatched passenger satisfaction.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-box">
+            <div class="feature-icon-wrapper">
+              <i data-lucide="clock-check" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.125rem; margin-bottom: 8px;">On-Time Guarantee</h3>
+            <p class="text-sm">98.4% on-time departure record verified by our real-time flight operations and automated dispatch.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrapper">
+              <i data-lucide="shield-check" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.125rem; margin-bottom: 8px;">Concurrency-Safe Seats</h3>
+            <p class="text-sm">Never suffer a double booking. PostgreSQL row-level locks guarantee your selected seat is yours alone.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrapper">
+              <i data-lucide="badge-dollar-sign" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.125rem; margin-bottom: 8px;">Transparent Pricing</h3>
+            <p class="text-sm">No sneaky checkout fees or hidden surcharges. What you see on the seat map is exactly what you pay.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrapper">
+              <i data-lucide="headset" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.125rem; margin-bottom: 8px;">24/7 Priority Support</h3>
+            <p class="text-sm">Round-the-clock passenger assistance, quick cancellation refunds, and immediate boarding pass re-issues.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (3 STEPS) -->
+    <section class="section-steps" aria-label="How It Works">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Easy Travel</span>
+          <h2>How It Works in 3 Simple Steps</h2>
+          <p>Book and fly effortlessly from any device with zero friction.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-badge-number">1</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 8px;">Search Flights</h3>
+            <p class="text-sm">Pick your origin, destination, and travel date. Filter live schedules with real-time seat availability.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-badge-number">2</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 8px;">Select Your Seat</h3>
+            <p class="text-sm">Explore the physical cabin layout (Rows A-F) with Business and Economy tiers, and secure your spot.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-badge-number">3</div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 8px;">Confirm & Board</h3>
+            <p class="text-sm">Instant confirmation with your 6-digit PNR. Complete ground check-in and download your digital boarding pass.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <!-- Page Logic -->
+  <script type="module" src="js/pages/home.js"></script>
+</body>
+</html>

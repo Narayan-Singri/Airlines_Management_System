@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a new FlyNow Airlines customer account for fast booking, live seat selection, and digital boarding passes.">
+  <title>Create Customer Account | FlyNow Airlines</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/auth.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header id="site-header" class="site-header"></header>
+
+  <main class="auth-page">
+    <div class="auth-card" style="max-width: 520px;">
+      <div class="auth-header">
+        <div class="logo-icon" style="margin: 0 auto var(--space-3) auto;">
+          <i data-lucide="user-plus" style="width: 20px; height: 20px;"></i>
+        </div>
+        <h2>Create an Account</h2>
+        <p class="text-sm text-muted">Join FlyNow for seamless reservations, instant e-tickets, and live flight tracking.</p>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="customer-register-form">
+        <div class="form-group mb-3">
+          <label class="form-label" for="reg-fullname">Full Name</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="user" class="input-icon" style="width: 18px; height: 18px;"></i>
+            <input type="text" id="reg-fullname" class="form-control" placeholder="e.g. Priya Sharma" required>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="mail" class="input-icon" style="width: 18px; height: 18px;"></i>
+            <input type="email" id="reg-email" class="form-control" placeholder="priya@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="reg-password">Create Password</label>
+          <div class="input-icon-wrapper">
+            <i data-lucide="lock" class="input-icon" style="width: 18px; height: 18px;"></i>
+            <input type="password" id="reg-password" class="form-control" placeholder="Minimum 6 characters" minlength="6" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);" class="mb-3">
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone Number</label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="9876543210">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-passport">Passport / ID No.</label>
+            <input type="text" id="reg-passport" class="form-control" placeholder="A12345678" style="text-transform: uppercase;">
+          </div>
+        </div>
+
+        <div class="form-group mb-6">
+          <label class="form-label" for="reg-nationality">Nationality</label>
+          <input type="text" id="reg-nationality" class="form-control" placeholder="e.g. Indian" value="Indian">
+        </div>
+
+        <button type="submit" id="btn-reg-submit" class="btn btn-primary btn-lg btn-block">
+          <span>Create Account & Sign In</span>
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        <p>Already have an account? <a href="/login.html">Sign in here</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module" src="js/pages/register.js"></script>
+</body>
+</html>
