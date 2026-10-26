@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadPopularRoutes();
 
   setupForms();
+  setupPlaneParallax();
+  setupEarthObserver();
 });
 
 /**
@@ -344,3 +346,51 @@ function setupForms() {
     });
   }
 }
+
+/**
+ * TASK 3: Gentle scroll-driven parallax for hero plane
+ */
+function setupPlaneParallax() {
+  const plane = document.getElementById('hero-plane-container');
+  if (!plane || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        if (scrolled < 900) {
+          plane.style.transform = `translate3d(0, ${scrolled * 0.16}px, 0)`;
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+/**
+ * TASK 4: Earth Background IntersectionObserver & visibility pause
+ */
+function setupEarthObserver() {
+  const earthImg = document.getElementById('rotating-earth-img');
+  const routesSection = document.getElementById('popular-routes');
+  if (!earthImg || !routesSection) return;
+
+  // Pause rotation when browser tab is inactive
+  document.addEventListener('visibilitychange', () => {
+    earthImg.classList.toggle('is-paused', document.hidden);
+  });
+
+  // Pause rotation when section is outside viewport for GPU performance
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        earthImg.classList.toggle('is-paused', !entry.isIntersecting);
+      });
+    }, { threshold: 0.05 });
+
+    observer.observe(routesSection);
+  }
+}
+

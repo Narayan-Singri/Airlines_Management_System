@@ -111,20 +111,85 @@
 .hero-airplane-container {
   position: relative;
   z-index: 2;
-  animation: planeFloat 4s ease-in-out infinite alternate;
-  filter: drop-shadow(0 25px 35px rgba(11, 37, 69, 0.2));
+  animation: planeGentleFlight 6s ease-in-out infinite alternate;
   transform-origin: center center;
+  max-width: 520px;
+  width: 100%;
+  pointer-events: none;
+  transition: transform 0.1s linear;
 }
 
-@keyframes planeFloat {
+.hero-plane-picture {
+  display: block;
+  width: 100%;
+}
+
+.hero-plane-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 20px 30px rgba(11, 37, 69, 0.2));
+}
+
+/* Speed / Motion Lines Trailing Behind Plane */
+.plane-speed-lines {
+  position: absolute;
+  top: 50%;
+  left: -80px;
+  width: 220px;
+  height: 120px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: -1;
+  overflow: visible;
+}
+
+.speed-streaks-svg,
+.backdrop-speed-lines {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.speed-streak-1 {
+  animation: streakMove 1.8s linear infinite;
+}
+
+.speed-streak-2 {
+  animation: streakMove 1.3s linear infinite 0.3s;
+}
+
+.speed-streak-3 {
+  animation: streakMove 2.1s linear infinite 0.6s;
+}
+
+@keyframes streakMove {
   0% {
-    transform: translateY(0px) rotate(0deg);
+    stroke-dashoffset: 60;
+    opacity: 0.1;
   }
   50% {
-    transform: translateY(-16px) rotate(1deg);
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(-8px) rotate(-1deg);
+    stroke-dashoffset: -120;
+    opacity: 0;
+  }
+}
+
+@keyframes planeGentleFlight {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  35% {
+    transform: translateY(-12px) rotate(1.2deg) scale(1.015);
+  }
+  70% {
+    transform: translateY(-6px) rotate(-0.8deg) scale(1.005);
+  }
+  100% {
+    transform: translateY(-18px) rotate(1.5deg) scale(1.02);
   }
 }
 
@@ -221,6 +286,184 @@
   margin-bottom: var(--space-2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Popular Routes Section with Rotating Earth & Plane Backdrop
+   -------------------------------------------------------------------------- */
+.section-routes {
+  position: relative;
+  padding: var(--space-16) 0;
+  background: linear-gradient(180deg, #F8FAFC 0%, #EDF4FF 50%, #F8FAFC 100%);
+  overflow: hidden; /* Clips bleeding rotation, prevents horizontal scroll */
+}
+
+/* TASK 4: Rotating Earth Texture */
+.routes-earth-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  margin-top: -450px;
+  margin-left: -450px;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.earth-globe-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.16; /* Subtle texture so text remains 100% AA compliant */
+  mix-blend-mode: multiply;
+  filter: blur(1.5px); /* Soft blur prevents baked city labels from misleading */
+  animation: earthRotate 140s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes earthRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.earth-globe-img.is-paused {
+  animation-play-state: paused !important;
+}
+
+/* TASK 3: Plane Artwork Backdrop sitting behind section text */
+.routes-plane-backdrop {
+  position: absolute;
+  top: 15px;
+  right: 6%;
+  width: 480px;
+  max-width: 55%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  display: flex;
+  align-items: center;
+  transform: rotate(-4deg);
+  animation: backdropPlaneDrift 8s ease-in-out infinite alternate;
+}
+
+.backdrop-plane-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.backdrop-speed-lines-wrapper {
+  position: absolute;
+  left: -70px;
+  top: 30%;
+  width: 180px;
+  height: 70px;
+}
+
+@keyframes backdropPlaneDrift {
+  0% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(-12px) rotate(-2deg);
+  }
+}
+
+/* Section Content Layering (firmly above decorations) */
+.routes-content-container {
+  position: relative;
+  z-index: 3;
+}
+
+.routes-section-header {
+  position: relative;
+  z-index: 3;
+}
+
+.routes-section-header h2 {
+  color: var(--color-navy);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.routes-section-header p {
+  color: var(--color-text-secondary);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive adjustments for 992px, 768px, 480px */
+@media (max-width: 992px) {
+  .routes-earth-bg {
+    width: 720px;
+    height: 720px;
+    margin-top: -360px;
+    margin-left: -360px;
+  }
+  .routes-plane-backdrop {
+    width: 360px;
+    top: 25px;
+    right: 2%;
+    opacity: 0.18;
+  }
+}
+
+@media (max-width: 768px) {
+  .routes-earth-bg {
+    width: 600px;
+    height: 600px;
+    margin-top: -300px;
+    margin-left: -300px;
+    opacity: 0.8;
+  }
+  .routes-plane-backdrop {
+    width: 280px;
+    top: 35px;
+    right: -20px;
+    opacity: 0.15;
+  }
+  .plane-speed-lines {
+    left: -40px;
+    width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .routes-earth-bg {
+    width: 480px;
+    height: 480px;
+    margin-top: -240px;
+    margin-left: -240px;
+  }
+  .routes-plane-backdrop {
+    width: 200px;
+    top: 40px;
+    right: -30px;
+    opacity: 0.12;
+  }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  .hero-airplane-container,
+  .earth-globe-img,
+  .routes-plane-backdrop,
+  .speed-streak-1,
+  .speed-streak-2,
+  .speed-streak-3,
+  .dashed-flight-path {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 .routes-grid {

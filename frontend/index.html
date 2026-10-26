@@ -64,80 +64,22 @@
             </g>
           </svg>
 
-          <!-- Original Vector Airplane Graphic -->
-          <div class="hero-airplane-container" aria-label="Commercial airliner illustration">
-            <svg width="420" height="230" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="fuselage-grad" x1="50" y1="120" x2="450" y2="120" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#E2E8F0" />
-                  <stop offset="35%" stop-color="#FFFFFF" />
-                  <stop offset="70%" stop-color="#F1F5F9" />
-                  <stop offset="100%" stop-color="#CBD5E1" />
-                </linearGradient>
-                <linearGradient id="tail-grad" x1="380" y1="30" x2="480" y2="120" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#1363DF" />
-                  <stop offset="70%" stop-color="#0B2545" />
-                  <stop offset="100%" stop-color="#FF6B35" />
-                </linearGradient>
-                <linearGradient id="wing-grad" x1="160" y1="130" x2="330" y2="240" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#E2E8F0" />
-                  <stop offset="50%" stop-color="#CBD5E1" />
-                  <stop offset="100%" stop-color="#94A3B8" />
-                </linearGradient>
-                <linearGradient id="engine-grad" x1="220" y1="160" x2="290" y2="210" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#334155" />
-                  <stop offset="60%" stop-color="#1E293B" />
-                  <stop offset="100%" stop-color="#0F172A" />
-                </linearGradient>
-              </defs>
+          <!-- Commercial Airliner Asset with Speed Lines & Gentle Flight Motion -->
+          <div class="hero-airplane-container" id="hero-plane-container" aria-label="FlyNow commercial airliner">
+            <!-- Trailing speed/motion lines behind plane -->
+            <div class="plane-speed-lines" aria-hidden="true">
+              <svg viewBox="0 0 240 120" fill="none" class="speed-streaks-svg">
+                <line x1="0" y1="30" x2="160" y2="30" stroke="rgba(0,102,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-dasharray="20,15" class="speed-streak-1" />
+                <line x1="20" y1="60" x2="210" y2="60" stroke="rgba(0,163,255,0.6)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="25,20" class="speed-streak-2" />
+                <line x1="5" y1="90" x2="180" y2="90" stroke="rgba(0,102,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="15,15" class="speed-streak-3" />
+              </svg>
+            </div>
 
-              <!-- Far Wing (Behind Fuselage) -->
-              <path d="M 230,110 L 320,40 L 360,45 L 290,115 Z" fill="#94A3B8" opacity="0.85"/>
-              
-              <!-- Tail Fin -->
-              <path d="M 380,120 L 440,30 L 485,32 L 445,128 Z" fill="url(#tail-grad)"/>
-              <!-- Tail Stripe Accent -->
-              <path d="M 430,45 L 445,30 L 460,31 L 438,55 Z" fill="#FF6B35"/>
-              <path d="M 418,65 L 438,55 L 452,56 L 424,80 Z" fill="#00A3FF"/>
-
-              <!-- Main Fuselage -->
-              <path d="M 50,140 C 50,110 130,95 240,95 C 380,95 440,110 460,128 C 470,136 460,145 430,150 C 350,165 190,165 100,162 C 60,160 50,155 50,140 Z" 
-                    fill="url(#fuselage-grad)" stroke="#CBD5E1" stroke-width="1.5"/>
-
-              <!-- Cockpit Windows -->
-              <path d="M 75,130 Q 95,122 110,123 L 115,132 Q 95,133 75,137 Z" fill="#0B2545"/>
-              <path d="M 85,128 Q 98,124 108,125" stroke="#38BDF8" stroke-width="1.5"/>
-
-              <!-- Passenger Windows -->
-              <g fill="#1E293B" opacity="0.8">
-                <circle cx="140" cy="132" r="3.5"/><circle cx="155" cy="132" r="3.5"/>
-                <circle cx="170" cy="132" r="3.5"/><circle cx="185" cy="132" r="3.5"/>
-                <circle cx="200" cy="132" r="3.5"/><circle cx="215" cy="132" r="3.5"/>
-                <circle cx="230" cy="132" r="3.5"/><circle cx="245" cy="132" r="3.5"/>
-                <circle cx="260" cy="132" r="3.5"/><circle cx="275" cy="132" r="3.5"/>
-                <circle cx="290" cy="132" r="3.5"/><circle cx="305" cy="132" r="3.5"/>
-                <circle cx="320" cy="132" r="3.5"/><circle cx="335" cy="132" r="3.5"/>
-                <circle cx="350" cy="132" r="3.5"/><circle cx="365" cy="132" r="3.5"/>
-              </g>
-
-              <!-- Near Wing (Front) -->
-              <path d="M 200,145 L 290,225 L 345,220 L 305,145 Z" fill="url(#wing-grad)" stroke="#94A3B8" stroke-width="1"/>
-              <!-- Wingtip Winglet -->
-              <path d="M 335,220 L 350,195 L 345,220 Z" fill="#1363DF"/>
-
-              <!-- Jet Engine Turbine -->
-              <g transform="translate(240, 165)">
-                <ellipse cx="25" cy="22" rx="14" ry="22" fill="#0B2545"/>
-                <ellipse cx="23" cy="22" rx="12" ry="19" fill="url(#engine-grad)"/>
-                <circle cx="23" cy="22" r="6" fill="#64748B"/>
-                <!-- Engine Cowling -->
-                <path d="M 23,2 L 65,10 Q 75,22 65,34 L 23,42 Z" fill="#E2E8F0" stroke="#CBD5E1"/>
-                <path d="M 25,6 L 60,13 L 60,18 L 25,12 Z" fill="#1363DF"/>
-              </g>
-
-              <!-- Subtle Drop Shadow under aircraft -->
-              <ellipse cx="260" cy="250" rx="140" ry="12" fill="rgba(11, 37, 69, 0.08)"/>
-            </svg>
+            <!-- Airplane artwork -->
+            <picture class="hero-plane-picture">
+              <source srcset="assets/plane.webp" type="image/webp">
+              <img src="assets/plane.png" alt="FlyNow commercial airliner taking flight" width="1267" height="481" class="hero-plane-img" fetchpriority="high">
+            </picture>
           </div>
         </div>
       </div>
@@ -324,9 +266,32 @@
     </div>
 
     <!-- POPULAR ROUTES SECTION -->
-    <section class="section-routes" id="popular-routes" aria-label="Popular Routes">
-      <div class="container">
-        <div class="section-header">
+    <section class="section-routes" id="popular-routes" aria-label="Popular Domestic & Metro Routes">
+      <!-- TASK 4: Rotating Earth Globe Texture Background -->
+      <div class="routes-earth-bg" aria-hidden="true" id="earth-globe-wrapper">
+        <picture>
+          <source srcset="assets/map.webp" type="image/webp">
+          <img src="assets/map.png" alt="" width="849" height="828" class="earth-globe-img" id="rotating-earth-img" loading="lazy">
+        </picture>
+      </div>
+
+      <!-- TASK 3: Plane Artwork Backdrop sitting behind section text -->
+      <div class="routes-plane-backdrop" aria-hidden="true">
+        <div class="backdrop-speed-lines-wrapper">
+          <svg class="backdrop-speed-lines" viewBox="0 0 260 80" fill="none">
+            <line x1="10" y1="20" x2="190" y2="20" stroke="rgba(0,102,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-dasharray="16,12" class="speed-streak-1" />
+            <line x1="30" y1="45" x2="240" y2="45" stroke="rgba(0,163,255,0.5)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="20,16" class="speed-streak-2" />
+            <line x1="15" y1="70" x2="180" y2="70" stroke="rgba(0,102,255,0.3)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="12,12" class="speed-streak-3" />
+          </svg>
+        </div>
+        <picture>
+          <source srcset="assets/plane.webp" type="image/webp">
+          <img src="assets/plane.png" alt="" width="1267" height="481" class="backdrop-plane-img" loading="lazy">
+        </picture>
+      </div>
+
+      <div class="container routes-content-container">
+        <div class="section-header routes-section-header">
           <span class="section-tag">Featured Flights</span>
           <h2>Popular Domestic & Metro Routes</h2>
           <p>Hand-picked non-stop flights with guaranteed dynamic seat availability and transparent base pricing.</p>

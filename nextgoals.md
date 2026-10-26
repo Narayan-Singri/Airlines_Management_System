@@ -42,19 +42,20 @@
   - [x] Fluid responsive layout down to 360px viewport.
   - [x] IntersectionObserver animation pausing and `prefers-reduced-motion` compliance.
   - [x] Status badges, cancel confirmation modal, and sanitized data rendering.
-- [ ] **Task 3: Hero Plane Artwork & Motion**:
-  - [ ] Replace banner plane with `assets/plane.png`.
-  - [ ] Floating flight motion, speed trail lines behind it, layered behind text (`z-index`, `pointer-events: none`).
-  - [ ] Scroll-driven parallax with responsive adjustments.
-- [ ] **Task 4: Slow-Rotating Earth Background**:
-  - [ ] Integrate `assets/map.png` as texture background on popular routes section.
-  - [ ] Continuous GPU rotation (90-180s), clipped overflow, no layout shift or horizontal scroll.
-  - [ ] Off-screen and `prefers-reduced-motion` pausing.
-- [ ] **Task 5: Baggage Image Integration**:
-  - [ ] Integrate `assets/baggage.png` with gentle floating shadow on `manage.html` and/or `confirmation.html`.
-- [ ] **Task 6: Assets Documentation & Final Regression**:
-  - [ ] Document assets in `frontend/ASSETS.md` noting academic use.
-  - [ ] Full regression testing across desktop and mobile viewports.
+- [x] **Task 3: Hero Plane Artwork & Motion**:
+  - [x] Replaced banner plane with high-performance picture element (`assets/plane.webp` + `assets/plane.png`).
+  - [x] Floating flight motion, trailing speed streak lines behind it, layered behind text (`z-index: 1`, `pointer-events: none`).
+  - [x] Scroll-driven parallax with responsive adjustments for 360px, 768px, 1280px, and 1920px.
+- [x] **Task 4: Slow-Rotating Earth Background**:
+  - [x] Integrated `assets/map.png` / `assets/map.webp` as texture background on Popular Routes section.
+  - [x] Continuous GPU rotation (140s), clipped overflow, zero layout shift or horizontal scroll.
+  - [x] Off-screen pausing via `IntersectionObserver` and `prefers-reduced-motion` compliance.
+- [x] **Task 5: Baggage Image Integration**:
+  - [x] Integrated `assets/baggage.png` / `assets/baggage.webp` with gentle floating shadow on `manage.html` (Baggage Guidelines & Allowance) and `confirmation.html` (Departure & Check-in Reminder).
+  - [x] Mobile-responsive layout stacking cleanly at 360px viewport without overflow.
+- [x] **Task 6: Assets Documentation & Final Regression**:
+  - [x] Recorded assets in `frontend/ASSETS.md` noting dimensions, WebP compression, loading strategy, and academic project notice (not for redistribution).
+  - [x] Regression testing across desktop and mobile viewports with browser subagent.
 
 ---
 

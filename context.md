@@ -88,3 +88,19 @@
   - *Micro-interactions & Performance*: Hover lift (`translateY(-8px)` and shadow) at 60fps; keyboard focusable with `tabindex="0"`; `IntersectionObserver` automatically pauses infinite float and shimmer animations when off-screen; `visibilitychange` pauses when tab is hidden; `prefers-reduced-motion` completely disables transforms and keyframes.
   - *Responsiveness*: Fluid layout adapting cleanly from 1280px down to 360px mobile viewports without horizontal scroll.
   - *Browser Verification*: Subagent verified rendering, blue palette, hover effects, cancel confirmation modal with PNR and Seat display, and 360px mobile responsiveness.
+- **Task 3: Hero Plane Artwork & Speed Lines (`index.html`, `css/pages/home.css`, `js/pages/home.js`)**:
+  - *Airliner Asset*: Replaced vector SVG with FlyNow airliner (`assets/plane.webp` with `assets/plane.png` fallback) with `mix-blend-mode: multiply` and drop shadow.
+  - *Motion & Trailing Lines*: Added looped floating flight animation (translate, rotate, scale) with trailing speed streak SVG lines.
+  - *Section Backdrop*: Positioned backdrop airliner and trailing lines behind the "Popular Domestic & Metro Routes" section text with `pointer-events: none`, soft opacity (0.22 desktop / 0.14 mobile), and text shadow to ensure WCAG AA contrast.
+  - *Scroll Parallax*: Scroll-driven parallax with `requestAnimationFrame` respecting `prefers-reduced-motion` across 360px, 768px, 1280px, and 1920px.
+- **Task 4: Slow-Rotating Earth Background (`index.html`, `css/pages/home.css`, `js/pages/home.js`)**:
+  - *Dotted Globe Texture*: Integrated `assets/map.png` / `assets/map.webp` as a large centered background for Popular Routes with subtle opacity (0.16) and gentle blur (1.5px) to keep city labels non-misleading.
+  - *GPU Continuous Rotation*: 140s continuous linear rotation clipped with `overflow: hidden`, guaranteeing zero layout shift and no horizontal scrollbar.
+  - *Performance*: Pauses rotation when off-screen via `IntersectionObserver` and when tab is hidden.
+- **Task 5: Baggage Image Integration (`manage.html`, `confirmation.html`, `css/components.css`)**:
+  - *Baggage Guidelines Panel*: Added on `manage.html` showing complimentary 7kg cabin carry-on and 15kg check-in luggage with `assets/baggage.webp` / `assets/baggage.png`.
+  - *Confirmation Reminder*: Added on `confirmation.html` beside airport check-in deadlines.
+  - *Micro-animation*: Floating soft-shadow micro-animation (`@keyframes baggageFloat 5s alternate`); stacks cleanly on 360px viewports.
+- **Task 6: Asset Optimization & Licensing (`frontend/ASSETS.md`)**:
+  - Generated compressed WebP versions (`plane.webp`, `map.webp`, `baggage.webp`) alongside original PNGs without overwriting.
+  - Documented in `ASSETS.md` noting dimensions, loading priority, and explicit academic project notice (strict non-redistribution).

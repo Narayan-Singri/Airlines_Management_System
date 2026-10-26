@@ -133,6 +133,30 @@
         </div>
       </div>
 
+      <!-- BAGGAGE & DEPARTURE REMINDER (TASK 5) -->
+      <section class="card baggage-reminder-card no-print mt-6" aria-label="Baggage and airport departure reminder">
+        <div class="baggage-panel-grid">
+          <div class="baggage-panel-content">
+            <span class="badge badge-success mb-2"><i data-lucide="check" style="width: 12px; height: 12px;"></i> Included in Your Booking</span>
+            <h3 style="font-size: 1.25rem; color: var(--color-navy); margin-bottom: 6px;">Baggage Allowance & Check-in Reminder</h3>
+            <p class="text-sm text-muted mb-3">
+              Your confirmed booking includes <strong>15 kg check-in baggage</strong> and <strong>7 kg cabin carry-on</strong>. Please arrive at the airport 2 hours before scheduled departure.
+            </p>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <span class="text-xs text-muted" style="display: flex; align-items: center; gap: 4px;">
+                <i data-lucide="clock" style="width: 14px; height: 14px; color: var(--color-primary);"></i> Baggage drop closes 45 mins prior to take-off
+              </span>
+            </div>
+          </div>
+          <div class="baggage-illustration-wrapper">
+            <picture>
+              <source srcset="assets/baggage.webp" type="image/webp">
+              <img src="assets/baggage.png" alt="Passenger luggage illustration" width="333" height="315" class="baggage-floating-img" loading="lazy">
+            </picture>
+          </div>
+        </div>
+      </section>
+
       <!-- Action Buttons (No Print) -->
       <div class="no-print mt-8" style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
         <button type="button" id="btn-print-ticket" class="btn btn-primary btn-lg">
