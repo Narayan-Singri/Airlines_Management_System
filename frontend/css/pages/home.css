@@ -128,8 +128,7 @@
   width: 100%;
   height: auto;
   display: block;
-  mix-blend-mode: multiply;
-  filter: drop-shadow(0 20px 30px rgba(11, 37, 69, 0.2));
+  filter: drop-shadow(0 20px 25px rgba(15, 23, 42, 0.18));
 }
 
 /* Speed / Motion Lines Trailing Behind Plane */
@@ -320,7 +319,6 @@
   height: 100%;
   object-fit: contain;
   opacity: 0.16; /* Subtle texture so text remains 100% AA compliant */
-  mix-blend-mode: multiply;
   filter: blur(1.5px); /* Soft blur prevents baked city labels from misleading */
   animation: earthRotate 140s linear infinite;
   transform-origin: center center;
@@ -349,8 +347,7 @@
   max-width: 55%;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.22;
-  mix-blend-mode: multiply;
+  opacity: 0.2;
   display: flex;
   align-items: center;
   transform: rotate(-4deg);

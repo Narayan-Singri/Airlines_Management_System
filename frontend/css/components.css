@@ -24,29 +24,76 @@
 }
 
 .brand-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-navy);
-  letter-spacing: -0.5px;
+  text-decoration: none;
+  line-height: 1;
 }
 
-.brand-logo .logo-icon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--color-primary), #00A3FF);
-  color: white;
+.brand-logo-img {
+  display: block;
+  height: var(--logo-header-height);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-fast);
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .brand-logo-img {
+    height: var(--logo-header-mobile-height);
+  }
+}
+
+/* Footer Badge Logo */
+.footer-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 14px;
   border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(19, 99, 223, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: var(--space-4);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.brand-logo .logo-accent {
-  color: var(--color-accent);
+.footer-logo-badge:hover {
+  background: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.footer-logo-badge .brand-logo-img {
+  height: var(--logo-footer-height);
+}
+
+/* Auth Pages Centered Logo */
+.auth-brand-logo {
+  display: block;
+  text-align: center;
+  margin: 0 auto var(--space-4) auto;
+}
+
+.auth-brand-logo img {
+  height: var(--logo-auth-height);
+  width: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 107, 224, 0.15));
+}
+
+/* Ticket & Boarding Pass Logo */
+.ticket-brand-logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ticket-brand-logo img {
+  height: var(--logo-ticket-height);
+  width: auto;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -988,7 +1035,6 @@
   max-width: 100%;
   height: auto;
   display: block;
-  mix-blend-mode: multiply;
   filter: drop-shadow(0 15px 25px rgba(0, 102, 255, 0.16));
   animation: baggageFloat 5s ease-in-out infinite alternate;
 }

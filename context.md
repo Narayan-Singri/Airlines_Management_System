@@ -82,14 +82,14 @@
     - Double-submit protection: Disabled button with spinner during network requests; cached `activeBookingId` so payment retry attempts do not cause duplicate bookings or 409 seat conflicts.
     - Browser test verified with `browser_subagent`: Tested empty VPA client validation error, UPI confirmation, PNR e-ticket issuance, and verified entry in My Bookings.
 - **Task 2: My Bookings Animated Ticket Cards (`my-bookings.html`, `css/pages/my-bookings.css`, `js/pages/my-bookings.js`)**:
-  - *Design System Adaptation*: Adapted Uiverse ticket card design with FlyNow blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`) replacing orange/red keyframe colors. Cancelled tickets use neutral muted slate (`#94a3b8`).
+  - *Design System Adaptation*: Adapted Uiverse ticket card design with SoraKaze Air blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`) replacing orange/red keyframe colors. Cancelled tickets use neutral muted slate (`#94a3b8`).
   - *Perforated Notch Separator*: Built vertical perforated dashed separator with circular cutout notches on top and bottom edges using page background color.
   - *Structured Flight Data*: Displayed origin IATA + city + departure time, flight trajectory line with direct flight duration, destination IATA + city + arrival time, PNR with copy button, seat & cabin class, departure date, total fare, and status badges (`CONFIRMED`, `CHECKED_IN`, `CANCELLED`).
   - *Micro-interactions & Performance*: Hover lift (`translateY(-8px)` and shadow) at 60fps; keyboard focusable with `tabindex="0"`; `IntersectionObserver` automatically pauses infinite float and shimmer animations when off-screen; `visibilitychange` pauses when tab is hidden; `prefers-reduced-motion` completely disables transforms and keyframes.
   - *Responsiveness*: Fluid layout adapting cleanly from 1280px down to 360px mobile viewports without horizontal scroll.
   - *Browser Verification*: Subagent verified rendering, blue palette, hover effects, cancel confirmation modal with PNR and Seat display, and 360px mobile responsiveness.
 - **Task 3: Hero Plane Artwork & Speed Lines (`index.html`, `css/pages/home.css`, `js/pages/home.js`)**:
-  - *Airliner Asset*: Replaced vector SVG with FlyNow airliner (`assets/plane.webp` with `assets/plane.png` fallback) with `mix-blend-mode: multiply` and drop shadow.
+  - *Airliner Asset*: Replaced vector SVG with SoraKaze airliner (`assets/plane-clean.webp` with `assets/plane-clean.png` fallback) with drop shadow contour.
   - *Motion & Trailing Lines*: Added looped floating flight animation (translate, rotate, scale) with trailing speed streak SVG lines.
   - *Section Backdrop*: Positioned backdrop airliner and trailing lines behind the "Popular Domestic & Metro Routes" section text with `pointer-events: none`, soft opacity (0.22 desktop / 0.14 mobile), and text shadow to ensure WCAG AA contrast.
   - *Scroll Parallax*: Scroll-driven parallax with `requestAnimationFrame` respecting `prefers-reduced-motion` across 360px, 768px, 1280px, and 1920px.
@@ -104,3 +104,22 @@
 - **Task 6: Asset Optimization & Licensing (`frontend/ASSETS.md`)**:
   - Generated compressed WebP versions (`plane.webp`, `map.webp`, `baggage.webp`) alongside original PNGs without overwriting.
   - Documented in `ASSETS.md` noting dimensions, loading priority, and explicit academic project notice (strict non-redistribution).
+
+### Fix 1: Checkerboard Removal Behind Hero Plane
+- **Diagnosis**: `assets/plane.png` was an RGB JPEG file with `#F7F7F7` (247, 247, 247) background and compression artifacts, lacking an alpha channel. Using `filter: drop-shadow` on an opaque RGB image caused browsers to cast a rectangular box shadow around the entire 1267x481 bounds.
+- **Background Removal**: Built Python edge-seeded flood-fill segmentation with smooth anti-aliased alpha falloff (`alpha = 0` at all four corners) and cropped to aircraft bounding box (1241 × 481).
+- **Clean Assets Saved**: Preserved original `plane.png` untouched; saved truly transparent `plane-clean.png` and `plane-clean.webp` (RGBA). Also cleaned `map-clean.png`/`.webp` and `baggage-clean.png`/`.webp`.
+- **CSS Corrections**: Removed `mix-blend-mode: multiply;` from `.hero-plane-img`; retained pure `filter: drop-shadow(...)` following aircraft contours and pointer-events: none.
+- **Verification**: Browser subagent verified across desktop (1280px), tablet (768px), and mobile (360px): zero box outline, zero halo, and smooth contour shadow.
+
+### Fix 2: Global SoraKaze Air Rebranding
+- **Logo Optimization & Favicons**: Cropped `frontend/assets/logo.png` to bounding box; exported full lockups (`logo-clean.png`, `logo.webp`, `logo-white.png`), swoosh mark icon (`logo-mark.png`, `logo-mark.webp`), multi-size favicons (32x32, 180x180, 512x512, `.ico`), and `site.webmanifest`.
+- **Palette Alignment**: Sampled primary blue (`#006BE0`), accent orange (`#FF6B35`), and navy (`#012555`) into `tokens.css`.
+- **Global Brand Replacement**:
+  - Header: Responsive `<picture>` lockup (42px desktop, 34px mobile) without redundant side text.
+  - Footer: Rounded white logo badge pill (`.footer-logo-badge`) with copyright `© 2026 SoraKaze Air`.
+  - Auth Pages (`login.html`, `register.html`, `staff/login.html`): Centered 60px SoraKaze Air logo above cards.
+  - Tickets & Boarding Passes (`confirmation.html`, `manage.js`, `my-bookings.js`): Replaced old plane icons with crisp SoraKaze Air badge and swoosh mark.
+  - Staff Navbar: Integrated SoraKaze Air logo mark with role indicators.
+  - All `<title>`, `<meta name="description">`, and `<meta name="theme-color">` updated to SoraKaze Air.
+- **Verification**: `grep -ri "flynow"` returned 0 occurrences across all frontend templates, stylesheets, scripts, and documentation. All 32 pytest tests passed. Browser subagent verified zero console errors and clean rendering.

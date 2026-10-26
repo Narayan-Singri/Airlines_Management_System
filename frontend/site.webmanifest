@@ -1,0 +1,26 @@
+{
+  "name": "SoraKaze Air",
+  "short_name": "SoraKaze",
+  "description": "Book your dream flights with SoraKaze Air",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0B1528",
+  "theme_color": "#006BE0",
+  "icons": [
+    {
+      "src": "/assets/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

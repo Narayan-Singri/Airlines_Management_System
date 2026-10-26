@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Your flight booking is confirmed on FlyNow Airlines. View and print your official digital boarding pass and ticket receipt.">
-  <title>Booking Confirmed | FlyNow Airlines</title>
+  <meta name="description" content="Your flight booking is confirmed on SoraKaze Air. View and print your official digital boarding pass and ticket receipt.">
+  <meta name="theme-color" content="#006BE0">
+  <title>Booking Confirmed | SoraKaze Air</title>
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,11 +47,13 @@
       <!-- PRINTABLE E-TICKET CARD -->
       <div class="ticket-container" id="printable-ticket">
         <div class="ticket-header">
-          <div class="brand-logo">
-            <div class="logo-icon">
-              <i data-lucide="plane-takeoff" style="width: 20px; height: 20px;"></i>
-            </div>
-            <span style="color: white;">Fly<span class="logo-accent">Now</span></span>
+          <div class="ticket-brand-logo">
+            <span class="footer-logo-badge" style="padding: 4px 10px; margin-bottom: 0;">
+              <picture>
+                <source srcset="assets/logo.webp" type="image/webp">
+                <img src="assets/logo-clean.png" alt="SoraKaze Air" width="84" height="28" style="height: 28px; width: auto;">
+              </picture>
+            </span>
           </div>
           <div style="text-align: right;">
             <div class="text-xs" style="color: #94A3B8; text-transform: uppercase;">Official E-Ticket</div>
@@ -150,8 +159,8 @@
           </div>
           <div class="baggage-illustration-wrapper">
             <picture>
-              <source srcset="assets/baggage.webp" type="image/webp">
-              <img src="assets/baggage.png" alt="Passenger luggage illustration" width="333" height="315" class="baggage-floating-img" loading="lazy">
+              <source srcset="assets/baggage-clean.webp" type="image/webp">
+              <img src="assets/baggage-clean.png" alt="Passenger luggage illustration" width="333" height="315" class="baggage-floating-img" loading="lazy">
             </picture>
           </div>
         </div>

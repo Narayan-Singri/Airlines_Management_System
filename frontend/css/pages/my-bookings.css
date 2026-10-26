@@ -1,5 +1,5 @@
 /* ==========================================================================
-   FlyNow Airlines - My Bookings Animated Ticket Cards (Adapted from Uiverse)
+   SoraKaze Air - My Bookings Animated Ticket Cards (Adapted from Uiverse)
    Design System: Blue Palette, Fluid Responsive, 60fps, Accessible
    ========================================================================== */
 
@@ -99,12 +99,12 @@
   background-color: #94a3b8 !important;
 }
 
-.container-icons .icon-plane {
-  color: #ffffff;
-  width: 22px;
-  height: 22px;
-  transform: rotate(90deg);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+.container-icons .icon-plane,
+.container-icons .ticket-stub-mark {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 .container-icons .stub-flight-no {
@@ -381,7 +381,7 @@
 }
 
 /* ==========================================================================
-   Animations & Palette - FlyNow Curated Blues
+   Animations & Palette - SoraKaze Curated Blues
    ========================================================================== */
 
 @keyframes ticket-float-card {

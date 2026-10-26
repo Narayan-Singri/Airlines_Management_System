@@ -38,7 +38,7 @@
   - [x] Double-submit button lock and partial failure retry path.
   - [x] Real browser subagent verification of end-to-end booking flow.
 - [x] **Task 2: My Bookings Animated Ticket Cards**:
-  - [x] Adapt Uiverse ticket card design with FlyNow blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`).
+  - [x] Adapt Uiverse ticket card design with SoraKaze Air blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`).
   - [x] Fluid responsive layout down to 360px viewport.
   - [x] IntersectionObserver animation pausing and `prefers-reduced-motion` compliance.
   - [x] Status badges, cancel confirmation modal, and sanitized data rendering.
@@ -56,6 +56,23 @@
 - [x] **Task 6: Assets Documentation & Final Regression**:
   - [x] Recorded assets in `frontend/ASSETS.md` noting dimensions, WebP compression, loading strategy, and academic project notice (not for redistribution).
   - [x] Regression testing across desktop and mobile viewports with browser subagent.
+
+## Completed Brand & Hero Visual Fixes
+- [x] **Fix 1: Checkerboard Removal Behind Hero Plane**:
+  - [x] Diagnosed fake transparency in `assets/plane.png` (RGB JPEG with #F7F7F7 background and compression artifacts).
+  - [x] Built edge-seeded flood-fill background removal with smooth anti-aliased edge falloff; saved truly transparent `assets/plane-clean.png` and `plane-clean.webp` (RGBA, alpha=0 corners).
+  - [x] Cleaned `assets/map-clean.png`/`.webp` and `assets/baggage-clean.png`/`.webp`.
+  - [x] Removed `mix-blend-mode: multiply;` and box shadows in CSS; used pure contour `filter: drop-shadow(...)`.
+  - [x] Real browser verified on 1280px desktop, 768px tablet, and 360px mobile.
+- [x] **Fix 2: Replace All Branding with SoraKaze Air**:
+  - [x] Auto-trimmed `assets/logo.png`; generated `logo-clean.png`/`.webp`, `logo-mark.png`/`.webp`, `logo-white.png`, favicons (32, 180, 512, `.ico`), and `site.webmanifest`.
+  - [x] Sampled logo colors into design tokens (`tokens.css`: primary `#006BE0`, orange `#FF6B35`, navy `#012555`).
+  - [x] Responsive header logo with `<picture>` element and zero redundant side text.
+  - [x] Elegant white rounded badge logo in dark footer (`.footer-logo-badge`).
+  - [x] Centered 60px logo above auth cards (`login.html`, `register.html`, `staff/login.html`).
+  - [x] Crisp 28px logo in printable e-ticket headers and digital boarding passes; swoosh mark in My Bookings left ticket stubs.
+  - [x] Replaced all occurrences across HTML, JS, CSS, and docs. `grep -ri "flynow"` returns 0 results.
+  - [x] Real browser subagent verified; all 32 pytest tests passed.
 
 ---
 

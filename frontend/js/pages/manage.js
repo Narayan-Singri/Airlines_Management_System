@@ -96,11 +96,13 @@ function renderBoardingPass(booking, bp) {
   container.innerHTML = `
     <div class="boarding-pass-card" id="printable-boarding-pass">
       <div class="boarding-pass-header">
-        <div class="brand-logo">
-          <div class="logo-icon">
-            <i data-lucide="plane-takeoff" style="width: 20px; height: 20px;"></i>
-          </div>
-          <span style="color: white;">Fly<span class="logo-accent">Now</span></span>
+        <div class="ticket-brand-logo">
+          <span class="footer-logo-badge" style="padding: 4px 10px; margin-bottom: 0;">
+            <picture>
+              <source srcset="/assets/logo.webp" type="image/webp">
+              <img src="/assets/logo-clean.png" alt="SoraKaze Air" width="84" height="28" style="height: 28px; width: auto;">
+            </picture>
+          </span>
         </div>
         <div style="text-align: right;">
           <div class="text-xs" style="color: #E0EDFF; text-transform: uppercase;">BOARDING PASS</div>

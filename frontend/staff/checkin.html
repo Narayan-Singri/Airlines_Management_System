@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ground Check-in Desk | Staff Portal</title>
+  <meta name="theme-color" content="#006BE0">
+  <title>Ground Check-in Desk | SoraKaze Air Staff Portal</title>
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +33,11 @@
   <header class="staff-navbar">
     <div class="container flex items-center justify-between">
       <div class="staff-nav-brand">
-        <i data-lucide="shield" style="color: var(--color-accent); width: 22px; height: 22px;"></i>
-        <span>FlyNow Ground Ops</span>
+        <picture>
+          <source srcset="../assets/logo-mark.webp" type="image/webp">
+          <img src="../assets/logo-mark.png" alt="SoraKaze Air" width="28" height="28" style="height: 28px; width: auto; object-fit: contain;">
+        </picture>
+        <span>SoraKaze Ground Ops</span>
         <span class="staff-badge" id="staff-role-badge">STAFF</span>
       </div>
 

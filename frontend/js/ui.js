@@ -144,11 +144,11 @@ export function renderHeader(activePage = '') {
 
   headerContainer.innerHTML = `
     <div class="container nav-container">
-      <a href="/index.html" class="brand-logo" aria-label="FlyNow Home">
-        <div class="logo-icon">
-          <i data-lucide="plane-takeoff" style="width: 22px; height: 22px;"></i>
-        </div>
-        <span>Fly<span class="logo-accent">Now</span></span>
+      <a href="/index.html" class="brand-logo" aria-label="SoraKaze Air">
+        <picture>
+          <source srcset="/assets/logo.webp" type="image/webp">
+          <img src="/assets/logo-clean.png" alt="SoraKaze Air" class="brand-logo-img" width="126" height="42" loading="eager">
+        </picture>
       </a>
 
       <nav class="nav-links">
@@ -224,12 +224,12 @@ export function renderFooter() {
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="brand-logo" style="margin-bottom: 16px;">
-            <div class="logo-icon">
-              <i data-lucide="plane-takeoff" style="width: 22px; height: 22px;"></i>
-            </div>
-            <span style="color: white;">Fly<span class="logo-accent">Now</span></span>
-          </div>
+          <a href="/index.html" class="footer-logo-badge" aria-label="SoraKaze Air Home">
+            <picture>
+              <source srcset="/assets/logo.webp" type="image/webp">
+              <img src="/assets/logo-clean.png" alt="SoraKaze Air" class="brand-logo-img" width="108" height="36" loading="lazy">
+            </picture>
+          </a>
           <p style="color: #94A3B8; font-size: 14px; max-width: 320px; line-height: 1.6;">
             World-class flight bookings, transparent fares, and seamless passenger ground check-in. Safe travels across India and global destinations.
           </p>
@@ -261,13 +261,13 @@ export function renderFooter() {
             24x7 Customer Priority Care & On-Time Arrival Guarantee.
           </p>
           <div style="display: flex; gap: 8px; color: #38BDF8; font-size: 13px; font-weight: 600;">
-            <i data-lucide="phone-call" style="width: 16px; height: 16px;"></i> +91 1800-FLY-NOW
+            <i data-lucide="phone-call" style="width: 16px; height: 16px;"></i> +91 1800-SORAKAZE
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <div>&copy; ${new Date().getFullYear()} FlyNow Airline Management System. All rights reserved.</div>
+        <div>&copy; ${new Date().getFullYear()} SoraKaze Air. All rights reserved.</div>
         <div style="display: flex; gap: 16px;">
           <span>PostgreSQL 18 Powered</span>
           <span>FastAPI REST Architecture</span>

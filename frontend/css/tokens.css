@@ -1,18 +1,25 @@
 :root {
-  /* Brand Palette */
-  --color-primary: #1363DF;
-  --color-primary-hover: #0D4DB8;
-  --color-primary-active: #093A8C;
+  /* Brand Palette (Sampled from SoraKaze Air Logo) */
+  --color-primary: #006BE0;
+  --color-primary-hover: #0056B3;
+  --color-primary-active: #00438C;
   --color-primary-light: #EEF5FF;
   --color-primary-subtle: #E0EDFF;
 
-  --color-navy: #0B2545;
-  --color-navy-dark: #061527;
-  --color-navy-light: #133E72;
+  --color-navy: #012555;
+  --color-navy-dark: #001736;
+  --color-navy-light: #0B3B7B;
 
   --color-accent: #FF6B35;
   --color-accent-hover: #E8551F;
   --color-accent-light: #FFF0EB;
+
+  /* Logo Size Tokens */
+  --logo-header-height: 42px;
+  --logo-header-mobile-height: 34px;
+  --logo-footer-height: 36px;
+  --logo-auth-height: 64px;
+  --logo-ticket-height: 28px;
 
   /* Neutrals & Surfaces */
   --color-bg-page: #F8FAFC;

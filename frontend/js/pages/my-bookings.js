@@ -119,9 +119,12 @@ async function loadMyBookings() {
 
       return `
         <article class="card-ticket ${isCancelled ? 'ticket-cancelled' : ''}" tabindex="0" aria-label="Flight ${flightNo} ticket for ${originCode} to ${destCode}, PNR ${pnr}">
-          <!-- Left Stub / Flight Identity -->
+          <!-- Left Stub / Flight Identity with SoraKaze Mark -->
           <div class="container-icons" aria-hidden="true">
-            <i data-lucide="plane" class="icon-plane"></i>
+            <picture>
+              <source srcset="/assets/logo-mark.webp" type="image/webp">
+              <img src="/assets/logo-mark.png" alt="SoraKaze" width="26" height="26" class="ticket-stub-mark">
+            </picture>
             <span class="stub-flight-no">${flightNo}</span>
             <span class="stub-class">${seatClass === 'BUSINESS' ? 'BIZ' : 'ECO'}</span>
           </div>
