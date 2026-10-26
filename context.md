@@ -1,33 +1,34 @@
 # System Context: Airlines Management System
 
 ## Current Status
-- **Current Phase**: Phase 1 Complete (Database Schema & Seed Data)
+- **Current Phase**: Phase 2 Complete (Database Connection & Health Monitoring)
 - **Git Repository**: Synced with GitHub (`Narayan-Singri/Airlines_Management_System`)
 - **Database Status**: Local PostgreSQL 18 instance running database `airline_db` with `airline` schema active.
-- **Python Environment**: Python 3.13 virtual environment (`venv`) with all dependencies installed.
+- **Python Environment**: Python 3.13 virtual environment (`venv`) with psycopg 3 connection pool and FastAPI integration.
 
 ## Implemented Components
-1. **Schema (`db/schema.sql`)**:
-   - Reference tables: `airport`, `aircraft`, `department`.
-   - Employee ISA Hierarchy: `employee`, `pilot`, `cabin_crew`, `ground_staff`, `dependent`.
-   - Core operations: `passenger`, `flight`, `flight_seat`, `flight_crew`, `flight_condition`.
-   - Transactional tables: `booking`, `payment`, `checkin`.
-   - Indexes: Partial indexes (`uq_live_seat`, `idx_seat_available`), composite indexes (`idx_flight_search`, `idx_cond_flight`, `idx_flight_status`).
-   - Stored procedures: `generate_flight_seats(p_flight_id)`, `book_seat(p_passenger, p_flight, p_seat)` with row locking (`FOR UPDATE`), `cancel_booking(p_booking)`.
-   - Triggers: `payment_confirms_booking` calling `trg_confirm_booking()` to transition booking status to `CONFIRMED`.
-   - Views: `v_flight_search` aggregating real-time available seat counts.
-2. **Seed Script (`db/seed.py`)**:
-   - Applies `db/schema.sql`.
-   - Hashes passwords using bcrypt with salt for all sample employees (Pilot, Cabin, Ground Staff, Admin) and customer accounts.
-3. **Automated Verification**:
-   - `tests/test_phase0_setup.py`: Verified structure and imports (4/4 passed).
-   - `tests/test_phase1_database.py`: Verified tables, constraints, triggers, views, procedures, and negative test cases (10/10 passed).
+1. **Settings (`app/config.py`)**:
+   - `pydantic-settings` model reading DB connection parameters, pool sizes, JWT secret, and CORS origins.
+2. **Database Module (`app/database.py`)**:
+   - `ConnectionPool` (`psycopg_pool`) initialized and shut down cleanly.
+   - Context manager `get_db_connection()` setting search_path to `airline`.
+   - Context manager `get_db_cursor()` using `dict_row` and supporting automatic or manual transaction commit/rollback.
+   - Query helpers: `fetch_one()`, `fetch_all()`, `execute_commit()`.
+   - Health check helper `check_db_health()`.
+3. **FastAPI Application (`app/main.py`)**:
+   - Lifespan handler managing connection pool lifecycle.
+   - CORS middleware configured via settings.
+   - Root endpoint `GET /` and health endpoint `GET /health` (returns 200 when connected, 503 if unreachable).
+4. **Verification & Tests**:
+   - `tests/test_phase0_setup.py`: Directory and import validation (4 passed).
+   - `tests/test_phase1_database.py`: Schema, constraints, triggers, and procedures (10 passed).
+   - `tests/test_phase2_database_connection.py`: Pool lifecycle, dict queries, rollback, and `/health` failure handling (5 passed). Total: 19 passed.
 
-## Key Design Decisions & Verification
-- `AvailableSeats` is never stored; verified that `v_flight_search` returns `total_seats - booked_seats`.
-- Double-booking is strictly prohibited by both `book_seat()` row check and `uq_live_seat` partial unique index.
-- Checked-in status and confirmation are transaction-safe through trigger automation.
+## Key Design Decisions
+- Direct connection pooling with psycopg 3 without ORM overhead.
+- Safe transaction rollbacks guarantee atomicity on unexpected exceptions.
+- Graceful health checking with explicit 503 HTTP status when database connectivity is interrupted.
 
 ## How to Run & Test
-- **Database Seed**: `python db/seed.py`
+- **Start Backend**: `uvicorn app.main:app --reload`
 - **Run Tests**: `pytest -v tests/`
