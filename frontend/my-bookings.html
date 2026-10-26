@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/pages/bookings.css">
+  <link rel="stylesheet" href="css/pages/my-bookings.css">
 </head>
 <body>
 
@@ -37,11 +38,17 @@
         </a>
       </div>
 
-      <!-- Bookings List Container -->
-      <div id="bookings-container" class="bookings-list">
+      <!-- Bookings Ticket Cards Container -->
+      <div id="bookings-container" class="container-cards-ticket" aria-live="polite">
         <!-- Loading skeletons -->
-        <div class="skeleton" style="height: 180px;"></div>
-        <div class="skeleton" style="height: 180px;"></div>
+        <div class="skeleton-ticket-card">
+          <div class="skeleton-ticket-stub"></div>
+          <div class="skeleton-ticket-content">
+            <div class="skeleton" style="height: 28px; width: 60%;"></div>
+            <div class="skeleton" style="height: 40px; width: 90%;"></div>
+            <div class="skeleton" style="height: 32px; width: 40%;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>

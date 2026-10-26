@@ -81,3 +81,10 @@
     - Styling: Styled trip breakdown rows with left-aligned labels, right-aligned values, and bold total with divider.
     - Double-submit protection: Disabled button with spinner during network requests; cached `activeBookingId` so payment retry attempts do not cause duplicate bookings or 409 seat conflicts.
     - Browser test verified with `browser_subagent`: Tested empty VPA client validation error, UPI confirmation, PNR e-ticket issuance, and verified entry in My Bookings.
+- **Task 2: My Bookings Animated Ticket Cards (`my-bookings.html`, `css/pages/my-bookings.css`, `js/pages/my-bookings.js`)**:
+  - *Design System Adaptation*: Adapted Uiverse ticket card design with FlyNow blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`) replacing orange/red keyframe colors. Cancelled tickets use neutral muted slate (`#94a3b8`).
+  - *Perforated Notch Separator*: Built vertical perforated dashed separator with circular cutout notches on top and bottom edges using page background color.
+  - *Structured Flight Data*: Displayed origin IATA + city + departure time, flight trajectory line with direct flight duration, destination IATA + city + arrival time, PNR with copy button, seat & cabin class, departure date, total fare, and status badges (`CONFIRMED`, `CHECKED_IN`, `CANCELLED`).
+  - *Micro-interactions & Performance*: Hover lift (`translateY(-8px)` and shadow) at 60fps; keyboard focusable with `tabindex="0"`; `IntersectionObserver` automatically pauses infinite float and shimmer animations when off-screen; `visibilitychange` pauses when tab is hidden; `prefers-reduced-motion` completely disables transforms and keyframes.
+  - *Responsiveness*: Fluid layout adapting cleanly from 1280px down to 360px mobile viewports without horizontal scroll.
+  - *Browser Verification*: Subagent verified rendering, blue palette, hover effects, cancel confirmation modal with PNR and Seat display, and 360px mobile responsiveness.

@@ -1,0 +1,531 @@
+/* ==========================================================================
+   FlyNow Airlines - My Bookings Animated Ticket Cards (Adapted from Uiverse)
+   Design System: Blue Palette, Fluid Responsive, 60fps, Accessible
+   ========================================================================== */
+
+.bookings-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+  min-height: 80vh;
+}
+
+/* Container for responsive grid of ticket cards */
+.container-cards-ticket {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  perspective: 1200px;
+  width: 100%;
+}
+
+/* Ticket Card */
+.card-ticket {
+  position: relative;
+  display: flex;
+  min-height: 170px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--color-navy);
+  background-color: #ffffff;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
+              box-shadow 0.35s ease,
+              border-color 0.3s ease;
+  z-index: 1;
+  overflow: hidden;
+  animation: ticket-float-card 12s infinite ease-in-out;
+  outline: none;
+}
+
+/* Hover and Keyboard Focus State */
+.card-ticket:hover,
+.card-ticket:focus-within {
+  animation-play-state: paused;
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 30px -10px rgba(0, 102, 255, 0.18), 0 10px 15px -5px rgba(15, 23, 42, 0.08);
+  border-color: var(--color-primary);
+
+  & .content-ticket::after,
+  & .content-ticket::before,
+  & .container-icons {
+    animation-play-state: paused;
+  }
+}
+
+/* Paused state for off-screen cards via IntersectionObserver */
+.card-ticket.is-paused,
+.card-ticket.is-paused *,
+.card-ticket.is-paused *::before,
+.card-ticket.is-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* Cancelled Card State */
+.card-ticket.ticket-cancelled {
+  border-color: #e2e8f0;
+  opacity: 0.85;
+  background-color: #fafbfc;
+  animation: none;
+}
+
+.card-ticket.ticket-cancelled:hover,
+.card-ticket.ticket-cancelled:focus-within {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+}
+
+/* Left Stub / Icon Column */
+.container-icons {
+  width: 56px;
+  min-width: 56px;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  animation: color-card-blue 10s infinite;
+  z-index: 2;
+  position: relative;
+  border-top-left-radius: var(--radius-xl);
+  border-bottom-left-radius: var(--radius-xl);
+}
+
+.ticket-cancelled .container-icons {
+  animation: none;
+  background-color: #94a3b8 !important;
+}
+
+.container-icons .icon-plane {
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
+  transform: rotate(90deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.container-icons .stub-flight-no {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+}
+
+.container-icons .stub-class {
+  font-size: 10px;
+  font-weight: 800;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Ticket Perforated Separator */
+.ticket-separator {
+  position: absolute;
+  top: 0;
+  left: 48px;
+  width: 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ticket-separator .span-lines {
+  position: relative;
+  display: flex;
+  height: 100%;
+  border-left: 2px dashed rgba(203, 213, 225, 0.8);
+}
+
+/* Top Cutout Notch */
+.ticket-separator .span-lines::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color-bg-page);
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Bottom Cutout Notch */
+.ticket-separator .span-lines::before {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color-bg-page);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Main Ticket Content Wrapper */
+.content-ticket {
+  position: relative;
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+/* Subtle Animated Shimmer Light Streaks */
+.content-ticket::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 102, 255, 0),
+    rgba(0, 102, 255, 0.08)
+  );
+  transform: translateX(200px) scale(1.5);
+  filter: blur(14px);
+  width: 220px;
+  height: 100%;
+  animation: shadow-card 10s infinite;
+  pointer-events: none;
+}
+
+.content-ticket::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0)
+  );
+  transform: translateX(-100px) scale(1.5) rotate(20deg);
+  width: 90px;
+  height: 100%;
+  animation: light-card 10s infinite;
+  pointer-events: none;
+}
+
+.ticket-cancelled .content-ticket::after,
+.ticket-cancelled .content-ticket::before {
+  display: none;
+}
+
+/* Ticket Structured Data Area */
+.content-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Destination Header Block */
+.ticket-destination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 0.75rem;
+}
+
+.ticket-dest-point {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-dest-point .city {
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.ticket-dest-point .iata {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  letter-spacing: 0.5px;
+}
+
+.ticket-dest-point .time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ticket-flight-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  flex: 1;
+  max-width: 160px;
+}
+
+.ticket-path-line {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+  margin: 6px 0;
+  border-radius: 2px;
+}
+
+.ticket-path-line::after {
+  content: "✈";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--color-primary);
+}
+
+.ticket-flight-duration {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Information Blocks Grid */
+.ticket-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.ticket-data-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-data-item .title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.ticket-data-item .subtitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* Actions Footer Row */
+.ticket-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ticket-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticket-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Copy PNR button */
+.btn-ticket-copy {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-ticket-copy:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* ==========================================================================
+   Animations & Palette - FlyNow Curated Blues
+   ========================================================================== */
+
+@keyframes ticket-float-card {
+  0% {
+    transform: translateZ(0px);
+  }
+  25% {
+    transform: translateY(-2px) rotateY(-1.5deg);
+  }
+  75% {
+    transform: translateY(2px) rotateY(1.5deg);
+  }
+  100% {
+    transform: translateZ(0px);
+  }
+}
+
+@keyframes light-card {
+  25% {
+    transform: translateX(550px) scale(1.5) rotate(25deg);
+  }
+  50% {
+    transform: translateX(-120px) scale(1.5) rotate(25deg);
+  }
+}
+
+@keyframes shadow-card {
+  35% {
+    transform: translateX(250px) scale(1.5);
+  }
+  75% {
+    transform: translateX(0px) scale(1.5);
+  }
+}
+
+/* Shifting Blue Hue Animation (Replaces original yellow/orange/red) */
+@keyframes color-card-blue {
+  0% {
+    background-color: var(--color-primary); /* #0066FF */
+  }
+  20% {
+    background-color: #0052cc; /* Rich Royal */
+  }
+  40% {
+    background-color: var(--color-navy); /* #0F172A Deep Navy */
+  }
+  60% {
+    background-color: #0284c7; /* Sky Azure */
+  }
+  80% {
+    background-color: var(--color-primary);
+  }
+  100% {
+    background-color: var(--color-primary);
+  }
+}
+
+/* ==========================================================================
+   Skeleton Loading State for Ticket Cards
+   ========================================================================== */
+.skeleton-ticket-card {
+  min-height: 170px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  background: white;
+  display: flex;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.skeleton-ticket-stub {
+  width: 56px;
+  min-width: 56px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-ticket-content {
+  flex: 1;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   Responsive Adaptations (down to 360px viewport)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .ticket-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .ticket-dest-point .iata {
+    font-size: 1.15rem;
+  }
+
+  .ticket-destination {
+    padding-bottom: 0.5rem;
+  }
+
+  .ticket-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ticket-buttons-group {
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .container-icons {
+    width: 48px;
+    min-width: 48px;
+    padding: 0.75rem 0.25rem;
+  }
+
+  .ticket-separator {
+    left: 40px;
+  }
+
+  .content-data {
+    padding: 0.75rem 0.85rem;
+  }
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-ticket,
+  .content-ticket::before,
+  .content-ticket::after,
+  .container-icons {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .card-ticket:hover,
+  .card-ticket:focus-within {
+    transform: none !important;
+  }
+}

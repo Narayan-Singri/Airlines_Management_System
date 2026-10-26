@@ -37,11 +37,11 @@
   - [x] Trip Summary layout styling (labels left, amounts right, bold total with divider).
   - [x] Double-submit button lock and partial failure retry path.
   - [x] Real browser subagent verification of end-to-end booking flow.
-- [ ] **Task 2: My Bookings Animated Ticket Cards**:
-  - [ ] Adapt Uiverse ticket card design with FlyNow blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`).
-  - [ ] Fluid responsive layout down to 360px viewport.
-  - [ ] IntersectionObserver animation pausing and `prefers-reduced-motion` compliance.
-  - [ ] Status badges, cancel confirmation modal, and sanitized data rendering.
+- [x] **Task 2: My Bookings Animated Ticket Cards**:
+  - [x] Adapt Uiverse ticket card design with FlyNow blue palette (`--color-primary`, `--color-primary-light`, `--color-navy`).
+  - [x] Fluid responsive layout down to 360px viewport.
+  - [x] IntersectionObserver animation pausing and `prefers-reduced-motion` compliance.
+  - [x] Status badges, cancel confirmation modal, and sanitized data rendering.
 - [ ] **Task 3: Hero Plane Artwork & Motion**:
   - [ ] Replace banner plane with `assets/plane.png`.
   - [ ] Floating flight motion, speed trail lines behind it, layered behind text (`z-index`, `pointer-events: none`).

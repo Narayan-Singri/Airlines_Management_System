@@ -1,5 +1,6 @@
 /**
  * My Bookings Page Controller
+ * Renders Animated Ticket Cards with Blue Design System & Micro-Interactions
  */
 import { api } from '../api.js';
 import { requireCustomerAuth } from '../auth.js';
@@ -15,6 +16,7 @@ import {
 
 let myBookings = [];
 let pendingCancelBookingId = null;
+let cardObserver = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   renderHeader('bookings');
@@ -23,14 +25,63 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!requireCustomerAuth('/login.html')) return;
 
   setupModal();
+  setupTabVisibilityListener();
   await loadMyBookings();
 });
+
+/**
+ * Handle Tab Hidden / Visible for Performance & Power Saving
+ */
+function setupTabVisibilityListener() {
+  document.addEventListener('visibilitychange', () => {
+    const isHidden = document.hidden;
+    document.querySelectorAll('.card-ticket').forEach(card => {
+      card.classList.toggle('is-paused', isHidden);
+    });
+  });
+}
+
+/**
+ * IntersectionObserver to pause infinite animations when cards are off-screen
+ */
+function setupCardObserver() {
+  if (cardObserver) {
+    cardObserver.disconnect();
+  }
+
+  cardObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('is-paused', !entry.isIntersecting);
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.card-ticket').forEach(card => {
+    cardObserver.observe(card);
+  });
+}
 
 async function loadMyBookings() {
   const container = document.getElementById('bookings-container');
   container.innerHTML = `
-    <div class="skeleton" style="height: 180px; margin-bottom: 16px;"></div>
-    <div class="skeleton" style="height: 180px;"></div>
+    <div class="skeleton-ticket-card">
+      <div class="skeleton-ticket-stub"></div>
+      <div class="skeleton-ticket-content">
+        <div class="skeleton" style="height: 28px; width: 60%;"></div>
+        <div class="skeleton" style="height: 40px; width: 90%;"></div>
+        <div class="skeleton" style="height: 32px; width: 40%;"></div>
+      </div>
+    </div>
+    <div class="skeleton-ticket-card">
+      <div class="skeleton-ticket-stub"></div>
+      <div class="skeleton-ticket-content">
+        <div class="skeleton" style="height: 28px; width: 60%;"></div>
+        <div class="skeleton" style="height: 40px; width: 90%;"></div>
+        <div class="skeleton" style="height: 32px; width: 40%;"></div>
+      </div>
+    </div>
   `;
 
   try {
@@ -38,13 +89,15 @@ async function loadMyBookings() {
 
     if (!Array.isArray(myBookings) || myBookings.length === 0) {
       container.innerHTML = `
-        <div class="card empty-state">
+        <div class="card empty-state" style="max-width: 600px; margin: 0 auto;">
           <div class="empty-state-icon">
-            <i data-lucide="ticket" style="width: 32px; height: 32px;"></i>
+            <i data-lucide="ticket" style="width: 36px; height: 36px; color: var(--color-primary);"></i>
           </div>
-          <h3>No Bookings Yet</h3>
-          <p class="text-sm text-muted">You haven't made any flight reservations yet.</p>
-          <a href="/search.html" class="btn btn-primary btn-sm mt-3">Book a Flight Now</a>
+          <h3 style="margin-top: 12px;">No Bookings Yet</h3>
+          <p class="text-sm text-muted">You haven't made any flight reservations yet. Ready to take flight?</p>
+          <a href="/search.html" class="btn btn-primary btn-sm mt-4">
+            <i data-lucide="search" style="width: 14px; height: 14px;"></i> Search Flights
+          </a>
         </div>
       `;
       if (window.lucide) window.lucide.createIcons();
@@ -55,80 +108,139 @@ async function loadMyBookings() {
       const isCancelled = b.status === 'CANCELLED';
       const isCheckedIn = b.status === 'CHECKED_IN';
       const statusClass = `badge-${(b.status || 'CONFIRMED').toLowerCase()}`;
+      const seatClass = (b.seat_class || 'ECONOMY').toUpperCase();
+      const originCode = escapeHTML(b.origin_code || b.origin || 'BOM');
+      const destCode = escapeHTML(b.destination_code || b.destination || 'DEL');
+      const originCity = escapeHTML(b.origin_city || 'Origin');
+      const destCity = escapeHTML(b.destination_city || 'Destination');
+      const flightNo = escapeHTML(b.flight_no || 'FL-000');
+      const pnr = escapeHTML(b.pnr || 'PNR000');
+      const seatNo = escapeHTML(b.seat_no || 'NA');
 
       return `
-        <div class="booking-item-card">
-          <!-- Card Header -->
-          <div class="booking-header">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="badge ${statusClass}">
-                <span class="badge-dot"></span> ${escapeHTML(b.status)}
-              </span>
-              <span class="text-xs font-semibold text-muted">Flight ${escapeHTML(b.flight_no)}</span>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="text-xs text-muted">PNR:</span>
-              <strong class="font-mono text-base" style="color: var(--color-primary); letter-spacing: 1px;">${escapeHTML(b.pnr)}</strong>
-              <button type="button" class="btn btn-outline btn-xs btn-copy-pnr" data-pnr="${escapeHTML(b.pnr)}" title="Copy PNR">
-                <i data-lucide="copy" style="width: 12px; height: 12px;"></i>
-              </button>
-            </div>
+        <article class="card-ticket ${isCancelled ? 'ticket-cancelled' : ''}" tabindex="0" aria-label="Flight ${flightNo} ticket for ${originCode} to ${destCode}, PNR ${pnr}">
+          <!-- Left Stub / Flight Identity -->
+          <div class="container-icons" aria-hidden="true">
+            <i data-lucide="plane" class="icon-plane"></i>
+            <span class="stub-flight-no">${flightNo}</span>
+            <span class="stub-class">${seatClass === 'BUSINESS' ? 'BIZ' : 'ECO'}</span>
           </div>
 
-          <!-- Route & Times Grid -->
-          <div class="booking-route-grid">
-            <div>
-              <div class="font-extrabold text-lg" style="color: var(--color-navy);">
-                ${escapeHTML(b.origin_city)} (${escapeHTML(b.origin)}) → ${escapeHTML(b.destination_city)} (${escapeHTML(b.destination)})
+          <!-- Perforated Notch & Line Separator -->
+          <div class="ticket-separator" aria-hidden="true">
+            <span class="span-lines"></span>
+          </div>
+
+          <!-- Main Ticket Content -->
+          <div class="content-ticket">
+            <div class="content-data">
+
+              <!-- Destination Header Block -->
+              <div class="ticket-destination">
+                <!-- Origin -->
+                <div class="ticket-dest-point">
+                  <span class="city">${originCity}</span>
+                  <span class="iata">${originCode}</span>
+                  <span class="time">
+                    <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                    ${formatTime(b.departure_time)}
+                  </span>
+                </div>
+
+                <!-- Flight Route Trajectory Indicator -->
+                <div class="ticket-flight-path">
+                  <span class="ticket-flight-duration">${escapeHTML(b.flight_no)} • Direct</span>
+                  <div class="ticket-path-line"></div>
+                  <span class="text-xs text-muted" style="font-size: 10px;">${formatDate(b.departure_time)}</span>
+                </div>
+
+                <!-- Destination -->
+                <div class="ticket-dest-point" style="text-align: right;">
+                  <span class="city">${destCity}</span>
+                  <span class="iata">${destCode}</span>
+                  <span class="time" style="justify-content: flex-end;">
+                    <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                    ${formatTime(b.arrival_time)}
+                  </span>
+                </div>
               </div>
-              <div class="text-xs text-muted mt-1">
-                Departure: <strong>${formatDate(b.departure_time)}</strong> at ${formatTime(b.departure_time)}
+
+              <!-- Ticket Info Grid -->
+              <div class="ticket-info-grid">
+                <!-- PNR -->
+                <div class="ticket-data-item">
+                  <span class="title">Booking Ref (PNR)</span>
+                  <div style="display: flex; align-items: center; gap: 4px;">
+                    <span class="subtitle font-mono" style="color: var(--color-primary);">${pnr}</span>
+                    <button type="button" class="btn-ticket-copy btn-copy-pnr" data-pnr="${pnr}" title="Copy PNR to clipboard" aria-label="Copy PNR">
+                      <i data-lucide="copy" style="width: 13px; height: 13px;"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Seat -->
+                <div class="ticket-data-item">
+                  <span class="title">Seat & Cabin</span>
+                  <span class="subtitle" style="color: var(--color-navy);">${seatNo} (${seatClass === 'BUSINESS' ? 'Business' : 'Economy'})</span>
+                </div>
+
+                <!-- Date -->
+                <div class="ticket-data-item">
+                  <span class="title">Departure Date</span>
+                  <span class="subtitle">${formatDate(b.departure_time)}</span>
+                </div>
+
+                <!-- Total Amount -->
+                <div class="ticket-data-item">
+                  <span class="title">Fare Paid</span>
+                  <span class="subtitle font-bold" style="color: var(--color-navy);">${formatCurrency(b.amount)}</span>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <div class="text-xs text-muted">Seat Assigned</div>
-              <div class="font-bold text-base" style="color: var(--color-primary);">${escapeHTML(b.seat_no)}</div>
-            </div>
+              <!-- Bottom Actions Bar -->
+              <div class="ticket-actions-bar">
+                <div class="ticket-badges-group">
+                  <span class="badge ${statusClass}">
+                    <span class="badge-dot"></span> ${escapeHTML(b.status || 'CONFIRMED')}
+                  </span>
+                  ${isCheckedIn ? '<span class="badge badge-info" style="font-size: 11px;">Boarding Ready</span>' : ''}
+                </div>
 
-            <div style="text-align: right;">
-              <div class="text-xs text-muted">Total Paid</div>
-              <div class="font-extrabold text-lg" style="color: var(--color-navy);">${formatCurrency(b.amount)}</div>
+                <div class="ticket-buttons-group">
+                  <a href="/confirmation.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-outline btn-xs" title="View official printable e-ticket">
+                    <i data-lucide="file-text" style="width: 13px; height: 13px;"></i> View Ticket
+                  </a>
+
+                  ${!isCancelled && !isCheckedIn ? `
+                    <a href="/manage.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-primary btn-xs">
+                      <i data-lucide="check-square" style="width: 13px; height: 13px;"></i> Check-in
+                    </a>
+                  ` : ''}
+
+                  ${isCheckedIn ? `
+                    <a href="/manage.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-primary btn-xs">
+                      <i data-lucide="printer" style="width: 13px; height: 13px;"></i> Boarding Pass
+                    </a>
+                  ` : ''}
+
+                  ${!isCancelled ? `
+                    <button type="button" class="btn btn-danger btn-xs btn-open-cancel" data-id="${b.booking_id}" data-pnr="${pnr}" data-seat="${seatNo}" title="Cancel booking">
+                      <i data-lucide="x-circle" style="width: 13px; height: 13px;"></i> Cancel
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+
             </div>
           </div>
-
-          <!-- Action Buttons -->
-          <div class="booking-actions">
-            <a href="/confirmation.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-outline btn-sm">
-              <i data-lucide="file-text" style="width: 14px; height: 14px;"></i> View E-Ticket
-            </a>
-
-            ${!isCancelled && !isCheckedIn ? `
-              <a href="/manage.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-primary btn-sm">
-                <i data-lucide="check-square" style="width: 14px; height: 14px;"></i> Check-in
-              </a>
-            ` : ''}
-
-            ${isCheckedIn ? `
-              <a href="/manage.html?pnr=${encodeURIComponent(b.pnr)}" class="btn btn-primary btn-sm">
-                <i data-lucide="printer" style="width: 14px; height: 14px;"></i> Boarding Pass
-              </a>
-            ` : ''}
-
-            ${!isCancelled ? `
-              <button type="button" class="btn btn-danger btn-sm btn-open-cancel" data-id="${b.booking_id}" data-pnr="${escapeHTML(b.pnr)}" data-seat="${escapeHTML(b.seat_no)}">
-                <i data-lucide="x-circle" style="width: 14px; height: 14px;"></i> Cancel
-              </button>
-            ` : ''}
-          </div>
-        </div>
+        </article>
       `;
     }).join('');
 
-    // Attach event handlers
+    // Attach copy PNR handlers
     document.querySelectorAll('.btn-copy-pnr').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const pnr = btn.getAttribute('data-pnr');
         navigator.clipboard.writeText(pnr).then(() => {
           showToast('Copied', `PNR ${pnr} copied to clipboard`, 'success');
@@ -136,8 +248,10 @@ async function loadMyBookings() {
       });
     });
 
+    // Attach cancel modal trigger handlers
     document.querySelectorAll('.btn-open-cancel').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const id = btn.getAttribute('data-id');
         const pnr = btn.getAttribute('data-pnr');
         const seat = btn.getAttribute('data-seat');
@@ -147,10 +261,14 @@ async function loadMyBookings() {
 
     if (window.lucide) window.lucide.createIcons();
 
+    // Initialize IntersectionObserver to pause off-screen animations
+    setupCardObserver();
+
   } catch (err) {
     container.innerHTML = `
-      <div class="card empty-state">
-        <p class="text-danger">Unable to load bookings: ${escapeHTML(err.message)}</p>
+      <div class="card empty-state" style="max-width: 600px; margin: 0 auto;">
+        <p class="text-danger font-semibold">Unable to load bookings: ${escapeHTML(err.message)}</p>
+        <button type="button" class="btn btn-outline btn-sm mt-3" onclick="location.reload()">Retry</button>
       </div>
     `;
   }
