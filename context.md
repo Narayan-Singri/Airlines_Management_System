@@ -1,34 +1,53 @@
 # System Context: Airlines Management System
 
 ## Current Status
-- **Current Phase**: Phase 2 Complete (Database Connection & Health Monitoring)
+- **Current Phase**: Phase 3 Complete (REST APIs, Security, RBAC & Integration Testing)
 - **Git Repository**: Synced with GitHub (`Narayan-Singri/Airlines_Management_System`)
-- **Database Status**: Local PostgreSQL 18 instance running database `airline_db` with `airline` schema active.
-- **Python Environment**: Python 3.13 virtual environment (`venv`) with psycopg 3 connection pool and FastAPI integration.
+- **Database Status**: Local PostgreSQL 18 instance running database `airline_db` with `airline` schema active and seeded.
+- **Python Environment**: Python 3.13 virtual environment (`venv`) with all dependencies installed.
 
 ## Implemented Components
-1. **Settings (`app/config.py`)**:
-   - `pydantic-settings` model reading DB connection parameters, pool sizes, JWT secret, and CORS origins.
-2. **Database Module (`app/database.py`)**:
-   - `ConnectionPool` (`psycopg_pool`) initialized and shut down cleanly.
-   - Context manager `get_db_connection()` setting search_path to `airline`.
-   - Context manager `get_db_cursor()` using `dict_row` and supporting automatic or manual transaction commit/rollback.
-   - Query helpers: `fetch_one()`, `fetch_all()`, `execute_commit()`.
-   - Health check helper `check_db_health()`.
-3. **FastAPI Application (`app/main.py`)**:
-   - Lifespan handler managing connection pool lifecycle.
-   - CORS middleware configured via settings.
-   - Root endpoint `GET /` and health endpoint `GET /health` (returns 200 when connected, 503 if unreachable).
-4. **Verification & Tests**:
-   - `tests/test_phase0_setup.py`: Directory and import validation (4 passed).
-   - `tests/test_phase1_database.py`: Schema, constraints, triggers, and procedures (10 passed).
-   - `tests/test_phase2_database_connection.py`: Pool lifecycle, dict queries, rollback, and `/health` failure handling (5 passed). Total: 19 passed.
+1. **Core Database (`db/`)**:
+   - `schema.sql`: Full relational schema (16 tables, constraints, partial unique indexes, functions `generate_flight_seats`, `book_seat`, `cancel_booking`, trigger `payment_confirms_booking`, and view `v_flight_search`).
+   - `seed.py`: Applied schema with real bcrypt password hashes for seed passengers and employees.
+2. **Infrastructure (`app/`)**:
+   - `config.py`: Environment configuration via `pydantic-settings`.
+   - `database.py`: psycopg 3 connection pool with context-managed transactions, row-to-dict mappings, and health checks.
+   - `security.py`: bcrypt password hashing, JWT generation/validation, role guards (`require_customer`, `require_staff`, `require_roles`).
+   - `main.py`: FastAPI app with CORS middleware, lifespan events, health endpoint, and all router inclusions.
+3. **API Routers & Services (`app/routers/` & `app/services/`)**:
+   - `auth`: `POST /auth/register`, `POST /auth/login`, `POST /auth/staff/login`, `GET /auth/me`.
+   - `flights`: `GET /flights?from=BOM&to=DEL&date=YYYY-MM-DD`, `GET /flights/{id}`, `GET /flights/{id}/seats`.
+   - `bookings`: `POST /bookings`, `GET /bookings/me`, `GET /bookings/{pnr}`, `POST /bookings/{id}/cancel`.
+   - `payments`: `POST /payments`, `GET /bookings/{id}/payments`.
+   - `checkin`: `POST /checkin`, `GET /checkin/{pnr}`.
+   - `flight_conditions`: `POST /flights/{id}/conditions`, `GET /flights/{id}/conditions`, `GET /flights/{id}/conditions/latest`, `PATCH /flights/{id}/status`.
+   - `admin`: CRUD for airports, aircraft, flights (with auto seat generation), employees, and flight crew assignments.
+4. **Automated Verification Suites (`tests/`)**:
+   - `test_phase0_setup.py`: Directory and import validation (4 passed).
+   - `test_phase1_database.py`: Database schema, procedures, constraints, and triggers (10 passed).
+   - `test_phase2_database_connection.py`: Connection pool lifecycle, rollback, and health checks (5 passed).
+   - `test_phase3_auth_and_flights.py`: Registration, JWT logins, RBAC restrictions, flight searches, and seat layouts (3 passed).
+   - `test_phase3_bookings_payments_checkin.py`: Booking, payment trigger, checkin validation, condition log, and admin CRUD (3 passed).
+   - `test_phase3_concurrency.py`: Race condition seat reservation test proving exactly one succeeds and one receives 409 Conflict (1 passed).
+   - `test_phase3_full_flow.py`: Full end-to-end integration lifecycle test (1 passed).
+   - **Total Tests**: 27 passed, 0 failures.
 
-## Key Design Decisions
-- Direct connection pooling with psycopg 3 without ORM overhead.
-- Safe transaction rollbacks guarantee atomicity on unexpected exceptions.
-- Graceful health checking with explicit 503 HTTP status when database connectivity is interrupted.
+## Key Design Decisions & Security Standards
+- **Race Condition Prevention**: Relies on PostgreSQL row locks (`FOR UPDATE`) within `book_seat()`. Concurrency test confirms zero double-booking possibility.
+- **Dynamic Capacity Tracking**: Storing stale `AvailableSeats` was completely avoided; computed via `v_flight_search` and `flight_seat` states.
+- **Privacy & Ownership**: Customers can only view and cancel their own bookings; password hashes are never exposed in any schema or response.
+- **Role-Based Guards**: Strict dependency injection checks reject customer tokens from staff endpoints and vice-versa.
 
 ## How to Run & Test
-- **Start Backend**: `uvicorn app.main:app --reload`
-- **Run Tests**: `pytest -v tests/`
+- **Start Backend API Server**:
+  ```powershell
+  uvicorn app.main:app --reload
+  ```
+- **Interactive Documentation**:
+  - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+  - ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+- **Run Complete Test Suite**:
+  ```powershell
+  pytest -v
+  ```

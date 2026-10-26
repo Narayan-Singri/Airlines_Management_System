@@ -10,6 +10,15 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import init_db_pool, close_db_pool, check_db_health
+from app.routers import (
+    auth,
+    flights,
+    bookings,
+    payments,
+    checkin,
+    flight_conditions,
+    admin,
+)
 
 
 @asynccontextmanager
@@ -22,7 +31,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Airline Management System API",
-    description="Backend REST API for Airline Management System built with FastAPI and PostgreSQL.",
+    description="Comprehensive Backend REST API for Airline Management System built with FastAPI and PostgreSQL.",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs",
@@ -37,6 +46,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register Routers
+app.include_router(auth.router)
+app.include_router(flights.router)
+app.include_router(bookings.router)
+app.include_router(payments.router)
+app.include_router(checkin.router)
+app.include_router(flight_conditions.router)
+app.include_router(admin.router)
 
 
 @app.get("/", tags=["System"])
