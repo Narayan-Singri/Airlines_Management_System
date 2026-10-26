@@ -1,30 +1,33 @@
 # System Context: Airlines Management System
 
 ## Current Status
-- **Current Phase**: Phase 0 (Project Setup)
-- **Git Repository**: Initialized, tracked on GitHub (`https://github.com/Narayan-Singri/Airlines_Management_System.git`)
-- **Virtual Environment**: Python 3.13 virtual environment (`venv`) configured with dependencies (`fastapi`, `uvicorn`, `psycopg[binary]`, `psycopg_pool`, `pydantic-settings`, `pyjwt`, `bcrypt`, `pytest`, `httpx`).
+- **Current Phase**: Phase 1 Complete (Database Schema & Seed Data)
+- **Git Repository**: Synced with GitHub (`Narayan-Singri/Airlines_Management_System`)
+- **Database Status**: Local PostgreSQL 18 instance running database `airline_db` with `airline` schema active.
+- **Python Environment**: Python 3.13 virtual environment (`venv`) with all dependencies installed.
 
 ## Implemented Components
-1. **Repository Structure**:
-   - `app/`: Source code package with `schemas/`, `routers/`, `services/`.
-   - `db/`: Database schema, seeds, queries.
-   - `tests/`: Automated test suite.
-   - `frontend/`: Preserved as an empty placeholder (`.gitkeep`).
-2. **Environment Configuration**:
-   - `.env.example`: Template for local database credentials, connection pool parameters, JWT secret, and CORS origins.
-   - `.gitignore`: Configured to ignore secrets, cache, and virtual environments.
+1. **Schema (`db/schema.sql`)**:
+   - Reference tables: `airport`, `aircraft`, `department`.
+   - Employee ISA Hierarchy: `employee`, `pilot`, `cabin_crew`, `ground_staff`, `dependent`.
+   - Core operations: `passenger`, `flight`, `flight_seat`, `flight_crew`, `flight_condition`.
+   - Transactional tables: `booking`, `payment`, `checkin`.
+   - Indexes: Partial indexes (`uq_live_seat`, `idx_seat_available`), composite indexes (`idx_flight_search`, `idx_cond_flight`, `idx_flight_status`).
+   - Stored procedures: `generate_flight_seats(p_flight_id)`, `book_seat(p_passenger, p_flight, p_seat)` with row locking (`FOR UPDATE`), `cancel_booking(p_booking)`.
+   - Triggers: `payment_confirms_booking` calling `trg_confirm_booking()` to transition booking status to `CONFIRMED`.
+   - Views: `v_flight_search` aggregating real-time available seat counts.
+2. **Seed Script (`db/seed.py`)**:
+   - Applies `db/schema.sql`.
+   - Hashes passwords using bcrypt with salt for all sample employees (Pilot, Cabin, Ground Staff, Admin) and customer accounts.
+3. **Automated Verification**:
+   - `tests/test_phase0_setup.py`: Verified structure and imports (4/4 passed).
+   - `tests/test_phase1_database.py`: Verified tables, constraints, triggers, views, procedures, and negative test cases (10/10 passed).
 
-## Key Design Decisions
-- **Raw Parameterized SQL**: Psycopg 3 (`psycopg-pool`) without ORM to keep SQL explicit and transparent for DBMS demonstration.
-- **Seat Availability Derivation**: Avoided storing stale `available_seats`; dynamically computed via `v_flight_search` and `flight_seat` row states.
-- **Concurrency Control**: DB row locking (`FOR UPDATE`) in `book_seat()` stored procedure to guarantee race-free booking.
-- **Disjoint ISA Specialisation**: Employee roles (Pilot, Cabin Crew, Ground Staff) inherit from a single `employee` table.
+## Key Design Decisions & Verification
+- `AvailableSeats` is never stored; verified that `v_flight_search` returns `total_seats - booked_seats`.
+- Double-booking is strictly prohibited by both `book_seat()` row check and `uq_live_seat` partial unique index.
+- Checked-in status and confirmation are transaction-safe through trigger automation.
 
 ## How to Run & Test
-- **Virtualenv Activation**: `.\venv\Scripts\Activate.ps1`
-- **Install Dependencies**: `pip install -r requirements.txt`
-- **Testing**: `pytest tests/`
-
-## Known Issues / Action Items
-- Local PostgreSQL database `airline_db` must be created and schema applied in Phase 1.
+- **Database Seed**: `python db/seed.py`
+- **Run Tests**: `pytest -v tests/`
