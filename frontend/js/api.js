@@ -78,12 +78,25 @@ export async function apiRequest(endpoint, options = {}) {
 
   if (!response.ok) {
     let errorMsg = 'An unexpected error occurred. Please try again.';
-    if (data && typeof data === 'object') {
+    if (response.status === 401) {
+      errorMsg = 'Your session has expired. Please sign in again.';
+    } else if (response.status === 409) {
+      errorMsg = typeof data?.detail === 'string' ? data.detail : 'This seat or resource is already booked or conflicting. Please choose another option.';
+    } else if (response.status === 422 && data && Array.isArray(data.detail)) {
+      // Map Pydantic validation errors to human-friendly messages
+      const friendlyErrors = data.detail.map(err => {
+        const field = err.loc ? err.loc[err.loc.length - 1] : 'field';
+        if (field === 'method') return 'Please select a valid payment method (UPI, Card, Netbanking, or Wallet).';
+        if (field === 'seat_no') return 'A valid seat selection is required.';
+        if (field === 'amount') return 'Payment amount must be greater than zero.';
+        if (field === 'passport_no') return 'A valid passport number is required.';
+        if (field === 'flight_id') return 'Flight identification is missing.';
+        return `Please check ${field}: ${err.msg}`;
+      });
+      errorMsg = friendlyErrors.join('. ');
+    } else if (data && typeof data === 'object') {
       if (typeof data.detail === 'string') {
         errorMsg = data.detail;
-      } else if (Array.isArray(data.detail)) {
-        // Pydantic validation errors array
-        errorMsg = data.detail.map(err => `${err.loc ? err.loc.join('.') + ': ' : ''}${err.msg}`).join(', ');
       } else if (data.message) {
         errorMsg = data.message;
       }

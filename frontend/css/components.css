@@ -891,3 +891,37 @@
     flex-direction: row;
   }
 }
+
+/* --------------------------------------------------------------------------
+   12. Price Summary Rows & Inline Form Validation
+   -------------------------------------------------------------------------- */
+.summary-breakdown-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.summary-breakdown-row.total-row {
+  border-top: 2px dashed var(--color-border);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-navy);
+}
+
+.form-error-inline {
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  margin-top: 4px;
+  font-weight: var(--font-weight-medium);
+  display: none;
+}
+
+.form-control.input-invalid {
+  border-color: var(--color-danger) !important;
+  background-color: var(--color-danger-bg) !important;
+}

@@ -121,6 +121,7 @@
               <div class="form-group mb-3">
                 <label class="form-label" for="upi-vpa">Virtual Payment Address (VPA)</label>
                 <input type="text" id="upi-vpa" class="form-control" placeholder="username@upi" value="passenger@okaxis">
+                <div class="form-error-inline" id="err-upi-vpa"></div>
               </div>
               <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                 <button type="button" class="btn btn-outline btn-xs upi-chip" data-vpa="@okhdfcbank">@okhdfcbank</button>
@@ -135,19 +136,23 @@
               <div class="form-group mb-3">
                 <label class="form-label" for="card-number">Card Number</label>
                 <input type="text" id="card-number" class="form-control" placeholder="4532 •••• •••• ••••" maxlength="19" value="4532 8901 2345 6789">
+                <div class="form-error-inline" id="err-card-number"></div>
               </div>
               <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--space-3);">
                 <div class="form-group">
                   <label class="form-label" for="card-holder">Name on Card</label>
                   <input type="text" id="card-holder" class="form-control" placeholder="Cardholder Name" value="Passenger Name">
+                  <div class="form-error-inline" id="err-card-holder"></div>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="card-expiry">Expiry</label>
                   <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY" maxlength="5" value="12/28">
+                  <div class="form-error-inline" id="err-card-expiry"></div>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="card-cvv">CVV</label>
                   <input type="password" id="card-cvv" class="form-control" placeholder="•••" maxlength="4" value="123">
+                  <div class="form-error-inline" id="err-card-cvv"></div>
                 </div>
               </div>
             </div>
@@ -222,16 +227,12 @@
 
           <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-4);">
             <div class="summary-breakdown-row">
-              <span>Base Seat Fare</span>
+              <span>Seat Fare</span>
               <span id="checkout-base-fare" class="font-semibold">₹0</span>
             </div>
             <div class="summary-breakdown-row">
-              <span>Airport Development Fee</span>
-              <span class="font-semibold">₹350</span>
-            </div>
-            <div class="summary-breakdown-row">
-              <span>Aviation Security & GST</span>
-              <span class="font-semibold">₹250</span>
+              <span>Taxes & Airport Surcharges</span>
+              <span class="font-semibold" style="color: var(--color-success);">Included</span>
             </div>
             <div class="summary-breakdown-row total-row">
               <span>Total Payable</span>

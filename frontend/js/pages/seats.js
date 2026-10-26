@@ -238,7 +238,7 @@ function handleSeatClick(seatNo) {
   const proceedBtn = document.getElementById('btn-proceed-booking');
 
   const seatPrice = Number(selectedSeat.price) || 0;
-  const totalPayable = seatPrice + AIRPORT_FEE + TAX_FEE;
+  const totalPayable = seatPrice;
 
   badgeEl.className = `badge ${selectedSeat.class_type === 'BUSINESS' ? 'badge-business' : 'badge-economy'}`;
   badgeEl.innerHTML = `
@@ -267,7 +267,7 @@ function setupProceedButton() {
     }
 
     const seatPrice = Number(selectedSeat.price) || 0;
-    const totalAmount = seatPrice + AIRPORT_FEE + TAX_FEE;
+    const totalAmount = seatPrice;
 
     const pendingBooking = {
       flight_id: flightDetail.flight_id,

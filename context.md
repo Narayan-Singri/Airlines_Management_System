@@ -70,7 +70,14 @@
 - **Interactive Documentation**:
   - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
   - ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
-- **Run Complete Test Suite**:
-  ```powershell
-  pytest -v
-  ```
+## Phase 4 Polish & Bug Fixes
+- **Task 1: Payment Failure (`checkout.html` / `checkout.js`)**:
+  - *Root Cause*: Request body sent `payment_method` instead of `method` required by `CreatePaymentRequest` Pydantic schema in `app/schemas/payments.py`.
+  - *Fixes Implemented*:
+    - Schema alignment: Mapped payment payload strictly to `method: 'UPI'|'CARD'|'NETBANKING'|'WALLET'`.
+    - Client-side validation: Added inline error messages (`.form-error-inline`) for VPA and card fields before network dispatch.
+    - Error translation: User-friendly error message mapping in `api.js` preventing raw `body.method` toasts.
+    - Amount consistency: Harmonized fare breakdowns across `seats.html` and `checkout.html` so `total_amount == seatPrice == booking.amount == payment.amount` without mismatched totals.
+    - Styling: Styled trip breakdown rows with left-aligned labels, right-aligned values, and bold total with divider.
+    - Double-submit protection: Disabled button with spinner during network requests; cached `activeBookingId` so payment retry attempts do not cause duplicate bookings or 409 seat conflicts.
+    - Browser test verified with `browser_subagent`: Tested empty VPA client validation error, UPI confirmation, PNR e-ticket issuance, and verified entry in My Bookings.
