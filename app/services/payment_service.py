@@ -43,7 +43,7 @@ def process_payment(user: Dict[str, Any], payload: CreatePaymentRequest) -> Paym
     query = """
     INSERT INTO payment(booking_id, amount, method, status)
     VALUES (%s, %s, %s, %s)
-    RETURNING payment_id, booking_id, amount, method, status, paid_at;
+    RETURNING payment_id, booking_id, amount, method, method AS payment_method, status, paid_at;
     """
     try:
         created = execute_commit(
@@ -77,7 +77,7 @@ def get_booking_payments(booking_id: int, user: Dict[str, Any]) -> List[PaymentD
         )
 
     query = """
-    SELECT payment_id, booking_id, amount, method, status, paid_at
+    SELECT payment_id, booking_id, amount, method, method AS payment_method, status, paid_at
     FROM payment
     WHERE booking_id = %s
     ORDER BY paid_at DESC;

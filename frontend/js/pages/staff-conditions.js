@@ -2,7 +2,7 @@
  * Flight Technical Conditions Controller
  */
 import { api } from '../api.js';
-import { requireStaffAuth, getUser, logout } from '../auth.js';
+import { requireStaffAuth, getUser, logout, setupStaffNavbar } from '../auth.js';
 import { formatDate, formatTime, escapeHTML, showToast } from '../ui.js';
 
 let flightsList = [];
@@ -10,6 +10,7 @@ let selectedFlightId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (!requireStaffAuth(['PILOT', 'ADMIN'], '/staff/login.html')) return;
+  setupStaffNavbar('conditions');
 
   const user = getUser();
   const roleBadge = document.getElementById('staff-role-badge');

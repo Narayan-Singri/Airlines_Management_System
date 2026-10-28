@@ -2,7 +2,7 @@
  * UI Utilities & Shared Component Renderers
  * Provides consistent navbar, footer, toast notifications, formatters, and XSS sanitization.
  */
-import { getUser, isLoggedIn, isStaff, isCustomer, logout } from './auth.js';
+import { getUser, isLoggedIn, isStaff, isCustomer, logout, getStaffHomeUrl } from './auth.js';
 
 /**
  * Escape raw strings before rendering into innerHTML to prevent XSS.
@@ -129,8 +129,9 @@ export function renderHeader(activePage = '') {
       </div>
     `;
   } else if (loggedIn && isStaff()) {
+    const staffHome = getStaffHomeUrl(user);
     userSection = `
-      <a href="/staff/checkin.html" class="btn btn-sm btn-accent">
+      <a href="${staffHome}" class="btn btn-sm btn-accent">
         <i data-lucide="shield" style="width: 14px; height: 14px;"></i> Staff Portal (${escapeHTML(user.emp_type || 'Staff')})
       </a>
       <button id="logout-btn" class="btn btn-sm btn-outline">Sign Out</button>

@@ -59,6 +59,39 @@ export function logout(redirectUrl = '/login.html') {
   window.location.href = redirectUrl;
 }
 
+export function getStaffHomeUrl(user = getUser()) {
+  if (!user) return '/staff/login.html';
+  if (user.emp_type === 'PILOT') {
+    return '/staff/conditions.html';
+  }
+  if (user.emp_type === 'CABIN_CREW') {
+    return '/staff/flight-status.html';
+  }
+  return '/staff/checkin.html';
+}
+
+export function setupStaffNavbar(activePage = '') {
+  const user = getUser();
+  if (!user) return;
+
+  const role = user.emp_type || 'STAFF';
+  const roleBadge = document.getElementById('staff-role-badge');
+  if (roleBadge) roleBadge.textContent = role;
+
+  const checkinLink = document.querySelector('[data-nav="checkin"]') || document.querySelector('a[href*="checkin"]');
+  const conditionsLink = document.querySelector('[data-nav="conditions"]') || document.querySelector('a[href*="conditions"]');
+  const statusLink = document.querySelector('[data-nav="status"]') || document.querySelector('a[href*="flight-status"]');
+
+  // Ground check-in is restricted to GROUND_STAFF and ADMIN
+  if (checkinLink && role !== 'GROUND_STAFF' && role !== 'ADMIN') {
+    checkinLink.remove();
+  }
+  // Flight conditions logger is restricted to PILOT and ADMIN
+  if (conditionsLink && role !== 'PILOT' && role !== 'ADMIN') {
+    conditionsLink.remove();
+  }
+}
+
 /**
  * Route Guard for customer-only pages
  */
@@ -71,7 +104,7 @@ export function requireCustomerAuth(redirect = '/login.html') {
   }
   if (isStaff()) {
     // Staff should not access customer booking pages
-    window.location.href = '/staff/checkin.html';
+    window.location.href = getStaffHomeUrl(user);
     return false;
   }
   return true;
@@ -91,7 +124,9 @@ export function requireStaffAuth(allowedRoles = [], redirect = '/staff/login.htm
   if (allowedRoles.length > 0 && user.emp_type) {
     if (!allowedRoles.includes(user.emp_type) && user.emp_type !== 'ADMIN') {
       alert(`Access restricted. Your role '${user.emp_type}' is not authorized for this section.`);
-      window.location.href = '/staff/checkin.html';
+      const fallbackUrl = getStaffHomeUrl(user);
+      // Immediately navigate without creating a history loop
+      window.location.replace(fallbackUrl);
       return false;
     }
   }

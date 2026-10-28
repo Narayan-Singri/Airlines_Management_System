@@ -18,10 +18,17 @@ class BookingDetail(BaseModel):
     pnr: str
     passenger_id: int
     passenger_name: str
+    passport_no: Optional[str] = None
     flight_id: int
     flight_no: str
     origin_code: str
     destination_code: str
+    origin: Optional[str] = None
+    destination: Optional[str] = None
+    origin_name: Optional[str] = None
+    destination_name: Optional[str] = None
+    origin_city: Optional[str] = None
+    destination_city: Optional[str] = None
     departure_time: datetime
     arrival_time: datetime
     seat_no: str

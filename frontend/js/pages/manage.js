@@ -93,6 +93,11 @@ function renderBoardingPass(booking, bp) {
   const baggageKg = bp?.baggage_kg ? `${bp.baggage_kg} kg` : 'Standard (15 kg)';
   const bpNumber = bp?.boarding_pass_no || `BP-${booking.pnr}`;
 
+  const originCode = booking.origin || booking.origin_code || '';
+  const destCode = booking.destination || booking.destination_code || '';
+  const originCity = booking.origin_city || originCode;
+  const destCity = booking.destination_city || destCode;
+
   container.innerHTML = `
     <div class="boarding-pass-card" id="printable-boarding-pass">
       <div class="boarding-pass-header">
@@ -155,12 +160,12 @@ function renderBoardingPass(booking, bp) {
         <div style="background: var(--color-bg-page); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; margin: var(--space-4) 0;">
           <div>
             <div class="text-xs font-bold text-muted">FROM</div>
-            <div class="font-extrabold text-xl" style="color: var(--color-navy);">${escapeHTML(booking.origin_city)} (${escapeHTML(booking.origin)})</div>
+            <div class="font-extrabold text-xl" style="color: var(--color-navy);">${escapeHTML(originCity)}${originCode ? ` (${escapeHTML(originCode)})` : ''}</div>
           </div>
           <i data-lucide="plane" style="color: var(--color-primary); width: 22px; height: 22px;"></i>
           <div style="text-align: right;">
             <div class="text-xs font-bold text-muted">TO</div>
-            <div class="font-extrabold text-xl" style="color: var(--color-navy);">${escapeHTML(booking.destination_city)} (${escapeHTML(booking.destination)})</div>
+            <div class="font-extrabold text-xl" style="color: var(--color-navy);">${escapeHTML(destCity)}${destCode ? ` (${escapeHTML(destCode)})` : ''}</div>
           </div>
         </div>
 
@@ -204,6 +209,10 @@ function renderBoardingPass(booking, bp) {
 function renderConfirmedSummary(booking) {
   const container = document.getElementById('booking-result-container');
   const isCancelled = booking.status === 'CANCELLED';
+  const originCode = booking.origin || booking.origin_code || '';
+  const destCode = booking.destination || booking.destination_code || '';
+  const originCity = booking.origin_city || originCode;
+  const destCity = booking.destination_city || destCode;
 
   container.innerHTML = `
     <div class="card">
@@ -261,13 +270,13 @@ function renderConfirmedSummary(booking) {
       <div style="background: var(--color-bg-page); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-6);">
         <div>
           <div class="text-xs font-bold text-muted">ORIGIN</div>
-          <div class="font-extrabold text-lg" style="color: var(--color-navy);">${escapeHTML(booking.origin_city)} (${escapeHTML(booking.origin)})</div>
+          <div class="font-extrabold text-lg" style="color: var(--color-navy);">${escapeHTML(originCity)}${originCode ? ` (${escapeHTML(originCode)})` : ''}</div>
           <div class="text-xs text-muted mt-1">Dep: ${formatDate(booking.departure_time)} at ${formatTime(booking.departure_time)}</div>
         </div>
         <i data-lucide="arrow-right" style="color: var(--color-primary); width: 22px; height: 22px;"></i>
         <div style="text-align: right;">
           <div class="text-xs font-bold text-muted">DESTINATION</div>
-          <div class="font-extrabold text-lg" style="color: var(--color-navy);">${escapeHTML(booking.destination_city)} (${escapeHTML(booking.destination)})</div>
+          <div class="font-extrabold text-lg" style="color: var(--color-navy);">${escapeHTML(destCity)}${destCode ? ` (${escapeHTML(destCode)})` : ''}</div>
           <div class="text-xs text-muted mt-1">Arr: ${formatDate(booking.arrival_time)} at ${formatTime(booking.arrival_time)}</div>
         </div>
       </div>

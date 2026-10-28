@@ -22,20 +22,40 @@ def process_checkin(staff_user: Dict[str, Any], payload: CheckinRequest) -> Boar
     """
     staff_id = staff_user["user_id"]
 
+    if not payload.booking_id and not payload.pnr:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Either booking_id or pnr must be provided.",
+        )
+
     # Retrieve booking and passenger details
-    query = """
-    SELECT b.booking_id, b.pnr, b.status, b.flight_id, b.seat_no,
-           p.passenger_id, p.full_name AS passenger_name, p.passport_no
-    FROM booking b
-    JOIN passenger p ON p.passenger_id = b.passenger_id
-    WHERE b.booking_id = %s;
-    """
-    booking = fetch_one(query, (payload.booking_id,))
+    if payload.booking_id:
+        query = """
+        SELECT b.booking_id, b.pnr, b.status, b.flight_id, b.seat_no,
+               p.passenger_id, p.full_name AS passenger_name, p.passport_no
+        FROM booking b
+        JOIN passenger p ON p.passenger_id = b.passenger_id
+        WHERE b.booking_id = %s;
+        """
+        booking = fetch_one(query, (payload.booking_id,))
+    else:
+        query = """
+        SELECT b.booking_id, b.pnr, b.status, b.flight_id, b.seat_no,
+               p.passenger_id, p.full_name AS passenger_name, p.passport_no
+        FROM booking b
+        JOIN passenger p ON p.passenger_id = b.passenger_id
+        WHERE b.pnr = %s;
+        """
+        booking = fetch_one(query, (payload.pnr.strip().upper(),))
+
     if not booking:
+        target = payload.booking_id if payload.booking_id else payload.pnr
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Booking with ID {payload.booking_id} not found.",
+            detail=f"Booking '{target}' not found.",
         )
+
+    actual_booking_id = booking["booking_id"]
 
     # Must be CONFIRMED
     if booking["status"] == "PENDING":
@@ -65,7 +85,7 @@ def process_checkin(staff_user: Dict[str, Any], payload: CheckinRequest) -> Boar
 
     # Check if checkin row already exists
     existing_checkin = fetch_one(
-        "SELECT checkin_id FROM checkin WHERE booking_id = %s;", (payload.booking_id,)
+        "SELECT checkin_id FROM checkin WHERE booking_id = %s;", (actual_booking_id,)
     )
     if existing_checkin:
         raise HTTPException(
@@ -80,12 +100,12 @@ def process_checkin(staff_user: Dict[str, Any], payload: CheckinRequest) -> Boar
     """
     try:
         checkin_row = execute_commit(
-            insert_query, (payload.booking_id, staff_id, True, payload.baggage_kg)
+            insert_query, (actual_booking_id, staff_id, True, payload.baggage_kg)
         )
         # Update booking status to CHECKED_IN
         execute_commit(
             "UPDATE booking SET status = 'CHECKED_IN' WHERE booking_id = %s;",
-            (payload.booking_id,),
+            (actual_booking_id,),
         )
     except psycopg.Error as e:
         raise HTTPException(
@@ -101,7 +121,11 @@ def get_checkin_by_pnr(pnr: str) -> BoardingPass:
     query = """
     SELECT c.checkin_id, c.boarding_pass_no, b.booking_id, b.pnr,
            p.full_name AS passenger_name, p.passport_no,
-           f.flight_no, o.iata_code AS origin_code, d.iata_code AS destination_code,
+           f.flight_no,
+           o.iata_code AS origin_code, d.iata_code AS destination_code,
+           o.iata_code AS origin, d.iata_code AS destination,
+           o.name AS origin_name, d.name AS destination_name,
+           o.city AS origin_city, d.city AS destination_city,
            f.departure_time, b.seat_no, s.class AS seat_class,
            c.baggage_kg, c.checked_in_at, e.full_name AS gate_staff
     FROM checkin c

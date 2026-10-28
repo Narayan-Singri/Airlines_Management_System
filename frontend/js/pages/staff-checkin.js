@@ -2,13 +2,14 @@
  * Ground Staff Check-in Desk Controller
  */
 import { api } from '../api.js';
-import { requireStaffAuth, getUser, logout } from '../auth.js';
+import { requireStaffAuth, getUser, logout, setupStaffNavbar } from '../auth.js';
 import { formatDate, formatTime, escapeHTML, showToast } from '../ui.js';
 
 let currentBooking = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!requireStaffAuth(['GROUND_STAFF', 'ADMIN'], '/staff/login.html')) return;
+  setupStaffNavbar('checkin');
 
   const user = getUser();
   const roleBadge = document.getElementById('staff-role-badge');
@@ -149,6 +150,7 @@ function renderVerificationForm(b) {
 
     try {
       const bpResp = await api.post('/checkin', {
+        booking_id: b.booking_id,
         pnr: b.pnr,
         passport_no: passportInput,
         baggage_kg: baggageWeight,

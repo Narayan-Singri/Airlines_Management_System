@@ -2,7 +2,7 @@
  * Staff Flight Status Operations Controller
  */
 import { api } from '../api.js';
-import { requireStaffAuth, getUser, logout } from '../auth.js';
+import { requireStaffAuth, getUser, logout, setupStaffNavbar } from '../auth.js';
 import { formatDate, escapeHTML, showToast } from '../ui.js';
 
 let flightsList = [];
@@ -10,6 +10,7 @@ let selectedFlightId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (!requireStaffAuth([], '/staff/login.html')) return;
+  setupStaffNavbar('status');
 
   const user = getUser();
   const roleBadge = document.getElementById('staff-role-badge');

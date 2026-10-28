@@ -42,8 +42,12 @@ def create_booking(customer_id: int, payload: CreateBookingRequest) -> BookingDe
 def get_booking_by_id(booking_id: int) -> BookingDetail:
     """Retrieves full details of a specific booking by ID."""
     query = """
-    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name,
-           b.flight_id, f.flight_no, o.iata_code AS origin_code, d.iata_code AS destination_code,
+    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name, p.passport_no,
+           b.flight_id, f.flight_no,
+           o.iata_code AS origin_code, d.iata_code AS destination_code,
+           o.iata_code AS origin, d.iata_code AS destination,
+           o.name AS origin_name, d.name AS destination_name,
+           o.city AS origin_city, d.city AS destination_city,
            f.departure_time, f.arrival_time, b.seat_no, s.class AS seat_class,
            b.status, b.amount, b.booked_at
     FROM booking b
@@ -66,8 +70,12 @@ def get_booking_by_id(booking_id: int) -> BookingDetail:
 def get_customer_bookings(customer_id: int) -> List[BookingDetail]:
     """Retrieves all bookings made by the authenticated customer."""
     query = """
-    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name,
-           b.flight_id, f.flight_no, o.iata_code AS origin_code, d.iata_code AS destination_code,
+    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name, p.passport_no,
+           b.flight_id, f.flight_no,
+           o.iata_code AS origin_code, d.iata_code AS destination_code,
+           o.iata_code AS origin, d.iata_code AS destination,
+           o.name AS origin_name, d.name AS destination_name,
+           o.city AS origin_city, d.city AS destination_city,
            f.departure_time, f.arrival_time, b.seat_no, s.class AS seat_class,
            b.status, b.amount, b.booked_at
     FROM booking b
@@ -89,8 +97,12 @@ def get_booking_by_pnr(pnr: str, user: Dict[str, Any]) -> BookingDetail:
     Enforces authorization: customers can only view their own bookings; staff can view any.
     """
     query = """
-    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name,
-           b.flight_id, f.flight_no, o.iata_code AS origin_code, d.iata_code AS destination_code,
+    SELECT b.booking_id, b.pnr, b.passenger_id, p.full_name AS passenger_name, p.passport_no,
+           b.flight_id, f.flight_no,
+           o.iata_code AS origin_code, d.iata_code AS destination_code,
+           o.iata_code AS origin, d.iata_code AS destination,
+           o.name AS origin_name, d.name AS destination_name,
+           o.city AS origin_city, d.city AS destination_city,
            f.departure_time, f.arrival_time, b.seat_no, s.class AS seat_class,
            b.status, b.amount, b.booked_at
     FROM booking b

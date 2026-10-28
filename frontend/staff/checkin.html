@@ -28,6 +28,10 @@
   <link rel="stylesheet" href="../css/pages/bookings.css">
 </head>
 <body class="staff-body">
+  <script type="module">
+    import { requireStaffAuth } from '../js/auth.js';
+    requireStaffAuth(['GROUND_STAFF', 'ADMIN'], '/staff/login.html');
+  </script>
 
   <!-- Staff Navbar -->
   <header class="staff-navbar">
@@ -42,13 +46,13 @@
       </div>
 
       <nav class="staff-nav-links">
-        <a href="/staff/checkin.html" class="staff-nav-link active">
+        <a href="/staff/checkin.html" class="staff-nav-link active" data-nav="checkin">
           <i data-lucide="check-square" style="width: 16px; height: 16px;"></i> Check-in Desk
         </a>
-        <a href="/staff/conditions.html" class="staff-nav-link">
+        <a href="/staff/conditions.html" class="staff-nav-link" data-nav="conditions">
           <i data-lucide="clipboard-check" style="width: 16px; height: 16px;"></i> Flight Conditions
         </a>
-        <a href="/staff/flight-status.html" class="staff-nav-link">
+        <a href="/staff/flight-status.html" class="staff-nav-link" data-nav="status">
           <i data-lucide="activity" style="width: 16px; height: 16px;"></i> Flight Status Ops
         </a>
         <button type="button" id="btn-staff-logout" class="btn btn-outline btn-sm" style="color: #94A3B8; border-color: #334155;">

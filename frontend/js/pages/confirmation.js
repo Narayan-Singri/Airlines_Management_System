@@ -55,7 +55,8 @@ async function loadBookingData() {
       const payments = await api.get(`/bookings/${booking.booking_id}/payments`);
       if (Array.isArray(payments) && payments.length > 0) {
         const lastPay = payments[payments.length - 1];
-        document.getElementById('ticket-payment-ref').textContent = `TXN #${lastPay.payment_id} | ${lastPay.payment_method} (${formatCurrency(lastPay.amount)})`;
+        const payMethod = lastPay.payment_method || lastPay.method || 'Online';
+        document.getElementById('ticket-payment-ref').textContent = `TXN #${lastPay.payment_id} | ${payMethod} (${formatCurrency(lastPay.amount)})`;
       } else {
         document.getElementById('ticket-payment-ref').textContent = `Paid ${formatCurrency(booking.amount)}`;
       }

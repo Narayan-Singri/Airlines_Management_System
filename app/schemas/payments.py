@@ -4,7 +4,7 @@ Pydantic models for Payments.
 
 from datetime import datetime
 from decimal import Decimal
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel, Field
 
 
@@ -20,5 +20,6 @@ class PaymentDetail(BaseModel):
     booking_id: int
     amount: Decimal
     method: str
+    payment_method: Optional[str] = None
     status: str
     paid_at: datetime
